@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Emblème NEVIE-GLOBAL">
+  <defs>
+    <linearGradient id="or" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D4A520"/>
+      <stop offset="100%" stop-color="#C8961E"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="#0D0B08" stroke="#C8961E" stroke-opacity=".45" stroke-width="1.5"/>
+  <path d="M19 46V18h6l14 20V18h6v28h-6L25 26v20z" fill="url(#or)"/>
+</svg>

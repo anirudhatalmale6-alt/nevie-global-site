@@ -1,0 +1,1316 @@
+/* ==========================================================================
+   NEVIE-GLOBAL SAS — Site institutionnel
+   Feuille de style principale. Aucune dépendance externe, aucun framework.
+
+   Sommaire
+   01. Jetons de design (couleurs, typographie, espacements, mouvement)
+   02. Réinitialisation et bases
+   03. Utilitaires de mise en page
+   04. Composants transverses (boutons, badges, titres de section, cartes)
+   05. En-tête et navigation
+   06. Hero
+   07. Le Groupe / Gouvernance
+   08. Notre Modèle (processus en 5 étapes)
+   09. Nos Entreprises (pôles et participations)
+   10. Croissance & Acquisitions
+   11. Céder son entreprise + formulaires
+   12. Contact
+   13. Pied de page
+   14. Bandeau cookies
+   15. Pages annexes (mentions légales, confidentialité)
+   16. Animations d'apparition + préférences de mouvement réduit
+   17. Points de rupture responsive
+   ========================================================================== */
+
+/* ==========================================================================
+   01. JETONS DE DESIGN
+   ========================================================================== */
+:root {
+  /* --- Charte imposée --- */
+  --noir:            #0D0B08;  /* fond principal */
+  --or:              #C8961E;  /* or principal */
+  --or-clair:        #D4A520;  /* or secondaire / survol */
+  --bleu:            #0A6CFF;  /* bleu électrique — actions et liens */
+
+  /* --- Déclinaisons dérivées de la charte --- */
+  --noir-2:          #141010;  /* fond des blocs surélevés */
+  --noir-3:          #1B1614;  /* fond des cartes */
+  --noir-4:          #221C18;  /* survol de carte */
+  --bleu-clair:      #3E8BFF;  /* bleu au survol */
+
+  /* --- Texte --- */
+  --texte:           #F3EFE9;  /* texte principal, blanc chaud */
+  --texte-doux:      #B5ADA3;  /* texte secondaire */
+  --texte-faible:    #837B72;  /* légendes, mentions */
+
+  /* --- Filets et contours (jamais de bordure franche : anneaux discrets) --- */
+  --filet:           rgba(243, 239, 233, .09);
+  --filet-fort:      rgba(243, 239, 233, .16);
+  --filet-or:        rgba(200, 150, 30, .32);
+
+  /* --- Typographie --- */
+  --police: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* Échelle fluide : s'adapte à la largeur sans media query */
+  --t-hero:   clamp(2.35rem, 1.2rem + 4.6vw, 4.6rem);
+  --t-h2:     clamp(1.75rem, 1.15rem + 2.2vw, 2.85rem);
+  --t-h3:     clamp(1.12rem, .98rem + .6vw, 1.4rem);
+  --t-corps:  clamp(.95rem, .92rem + .18vw, 1.05rem);
+  --t-chapo:  clamp(1.02rem, .96rem + .5vw, 1.22rem);
+  --t-petit:  .82rem;
+  --t-micro:  .72rem;
+
+  /* --- Espacements --- */
+  --gouttiere: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(4.5rem, 9vw, 8.5rem);
+  --largeur:   1200px;
+  --largeur-texte: 68ch;
+
+  /* --- Rayons --- */
+  --r-s: 6px;
+  --r-m: 10px;
+  --r-l: 16px;
+
+  /* --- Mouvement (jetons uniques, réutilisés partout) --- */
+  --duree-rapide: 160ms;
+  --duree:        280ms;
+  --duree-lente:  620ms;
+  --courbe:       cubic-bezier(.22, .61, .36, 1);
+
+  /* --- Ombres : diffuses et chaudes, jamais de noir pur --- */
+  --ombre-carte: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.85);
+}
+
+/* ==========================================================================
+   02. RÉINITIALISATION ET BASES
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* Décalage d'ancre : compense la hauteur de l'en-tête fixe */
+  scroll-padding-top: 92px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--noir);
+  color: var(--texte);
+  font-family: var(--police);
+  font-size: var(--t-corps);
+  font-weight: 400;
+  line-height: 1.68;
+  letter-spacing: .002em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Verrouillage du défilement quand le menu mobile est ouvert */
+body.menu-ouvert { overflow: hidden; }
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 1.05em; }
+p:last-child { margin-bottom: 0; }
+
+a {
+  color: var(--bleu);
+  text-decoration: none;
+  transition: color var(--duree-rapide) var(--courbe);
+}
+a:hover { color: var(--bleu-clair); }
+
+img, svg { max-width: 100%; height: auto; display: block; }
+
+/* Les listes servent ici de structure sémantique, pas de puces natives :
+   les repères visuels sont dessinés en CSS (voir .puces, .liste-marquee). */
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+/* Accessibilité : anneau de focus visible et cohérent partout */
+:focus-visible {
+  outline: 2px solid var(--bleu);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Lien d'évitement pour la navigation au clavier */
+.saut-contenu {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  padding: .75rem 1.25rem;
+  background: var(--bleu);
+  color: #fff;
+  font-size: var(--t-petit);
+  border-radius: 0 0 var(--r-s) 0;
+}
+.saut-contenu:focus { left: 0; color: #fff; }
+
+/* Masqué visuellement mais lu par les lecteurs d'écran */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   03. UTILITAIRES DE MISE EN PAGE
+   ========================================================================== */
+.conteneur {
+  width: 100%;
+  max-width: var(--largeur);
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+
+.section { padding-block: var(--section-y); position: relative; }
+
+/* Alternance de fond très légère pour séparer les sections sans trait dur */
+.section--alt { background: linear-gradient(180deg, var(--noir) 0%, var(--noir-2) 18%, var(--noir-2) 82%, var(--noir) 100%); }
+
+/* Filet horizontal dégradé, utilisé comme séparateur discret */
+.filet-h {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, var(--filet-fort), transparent);
+}
+
+/* ==========================================================================
+   04. COMPOSANTS TRANSVERSES
+   ========================================================================== */
+
+/* --- Sur-titre doré en petites capitales --- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin: 0 0 1.1rem;
+  color: var(--or-clair);
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--or);
+  flex: none;
+}
+
+/* --- En-tête de section --- */
+.section-tete { max-width: 780px; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.section-tete h2 { font-size: var(--t-h2); }
+.section-tete .chapo {
+  margin-top: 1.15rem;
+  color: var(--texte-doux);
+  font-size: var(--t-chapo);
+  font-weight: 300;
+  line-height: 1.62;
+  max-width: var(--largeur-texte);
+}
+
+/* --- Boutons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  padding: .85rem 1.6rem;
+  border: 0;
+  border-radius: var(--r-s);
+  font-family: inherit;
+  font-size: var(--t-petit);
+  font-weight: 500;
+  letter-spacing: .04em;
+  line-height: 1.2;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color var(--duree) var(--courbe),
+              color var(--duree) var(--courbe),
+              box-shadow var(--duree) var(--courbe),
+              transform var(--duree-rapide) var(--courbe);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn--primaire {
+  background: var(--bleu);
+  color: #fff;
+  box-shadow: 0 8px 24px -12px rgba(10, 108, 255, .9);
+}
+.btn--primaire:hover { background: var(--bleu-clair); color: #fff; box-shadow: 0 12px 30px -12px rgba(10, 108, 255, 1); }
+
+.btn--secondaire {
+  background: transparent;
+  color: var(--texte);
+  box-shadow: inset 0 0 0 1px var(--filet-fort);
+}
+.btn--secondaire:hover { color: var(--or-clair); box-shadow: inset 0 0 0 1px var(--filet-or); }
+
+.btn--or {
+  background: transparent;
+  color: var(--or-clair);
+  box-shadow: inset 0 0 0 1px var(--filet-or);
+}
+.btn--or:hover { background: rgba(200, 150, 30, .1); color: var(--or-clair); }
+
+.btn[disabled] { opacity: .55; cursor: not-allowed; }
+
+/* --- Lien fléché (renvoi interne ou externe) --- */
+.lien-fleche {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: var(--t-petit);
+  font-weight: 500;
+  letter-spacing: .03em;
+}
+.lien-fleche .ico { width: 14px; height: 14px; transition: transform var(--duree) var(--courbe); }
+.lien-fleche:hover .ico { transform: translateX(3px); }
+
+/* --- Badges de statut (Détenue / En acquisition / À venir) --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .32rem .7rem;
+  border-radius: 999px;
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.badge--detenue     { color: var(--or-clair); background: rgba(200, 150, 30, .11); box-shadow: inset 0 0 0 1px var(--filet-or); }
+.badge--acquisition { color: var(--bleu-clair); background: rgba(10, 108, 255, .12); box-shadow: inset 0 0 0 1px rgba(10, 108, 255, .35); }
+.badge--avenir      { color: var(--texte-faible); background: rgba(243, 239, 233, .05); box-shadow: inset 0 0 0 1px var(--filet); }
+
+/* --- Carte générique --- */
+.carte {
+  position: relative;
+  background: var(--noir-3);
+  border-radius: var(--r-l);
+  box-shadow: inset 0 0 0 1px var(--filet), var(--ombre-carte);
+  transition: background-color var(--duree) var(--courbe),
+              box-shadow var(--duree) var(--courbe),
+              transform var(--duree) var(--courbe);
+}
+
+/* ==========================================================================
+   05. EN-TÊTE ET NAVIGATION
+   ========================================================================== */
+.entete {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background-color var(--duree) var(--courbe),
+              box-shadow var(--duree) var(--courbe),
+              backdrop-filter var(--duree) var(--courbe);
+}
+/* État « défilé » : fond opaque et filet bas, posé par le JS */
+.entete.est-defile {
+  background: rgba(13, 11, 8, .88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--filet);
+}
+
+.entete__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 76px;
+}
+
+/* --- Marque : emblème « N » + raison sociale --- */
+.marque {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  color: var(--texte);
+  flex: none;
+}
+.marque:hover { color: var(--texte); }
+.marque__embleme { width: 38px; height: 38px; flex: none; }
+.marque__texte { display: flex; flex-direction: column; line-height: 1.1; }
+.marque__nom {
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+.marque__nom span { color: var(--or); }
+.marque__forme {
+  font-size: .6rem;
+  font-weight: 400;
+  letter-spacing: .3em;
+  color: var(--texte-faible);
+  text-transform: uppercase;
+}
+
+/* --- Navigation principale --- */
+.nav { display: flex; align-items: center; gap: clamp(.5rem, 1.5vw, 1.6rem); }
+.nav__lien {
+  position: relative;
+  padding: .45rem 0;
+  color: var(--texte-doux);
+  font-size: .82rem;
+  font-weight: 400;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+.nav__lien::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--or);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duree) var(--courbe);
+}
+.nav__lien:hover { color: var(--texte); }
+/* Lien de la section actuellement visible (posé par IntersectionObserver) */
+.nav__lien.est-actif { color: var(--texte); }
+.nav__lien.est-actif::after { transform: scaleX(1); }
+
+.entete .btn { padding: .68rem 1.15rem; }
+
+/* --- Bouton hamburger (mobile) --- */
+.burger {
+  display: none;
+  /* Au-dessus du panneau de menu (z-index 110) : le bouton de fermeture
+     doit rester cliquable lorsque le menu plein écran est ouvert. */
+  position: relative;
+  z-index: 115;
+  width: 42px; height: 42px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--r-s);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px var(--filet-fort);
+}
+.burger__barres { display: block; margin: 0 auto; width: 18px; height: 12px; position: relative; }
+.burger__barres::before,
+.burger__barres::after,
+.burger__barres i {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 1.5px;
+  background: var(--texte);
+  border-radius: 2px;
+  transition: transform var(--duree) var(--courbe), opacity var(--duree-rapide) var(--courbe);
+}
+.burger__barres::before { top: 0; }
+.burger__barres i { top: 5.25px; }
+.burger__barres::after { bottom: 0; }
+.burger[aria-expanded="true"] .burger__barres::before { transform: translateY(5.25px) rotate(45deg); }
+.burger[aria-expanded="true"] .burger__barres i { opacity: 0; }
+.burger[aria-expanded="true"] .burger__barres::after { transform: translateY(-5.25px) rotate(-45deg); }
+
+/* ==========================================================================
+   06. HERO
+   ========================================================================== */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: min(100svh, 900px);
+  padding-block: clamp(7rem, 14vh, 10rem) clamp(3.5rem, 8vh, 6rem);
+  overflow: hidden;
+}
+
+/* Halos de fond : dégradés radiaux, aucun fichier image à charger */
+.hero__fond {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 62% at 76% 22%, rgba(10, 108, 255, .16) 0%, transparent 62%),
+    radial-gradient(52% 55% at 12% 78%, rgba(200, 150, 30, .13) 0%, transparent 60%);
+}
+/* Grille technique très discrète, en pur CSS */
+.hero__grille {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .45;
+  background-image:
+    linear-gradient(var(--filet) 1px, transparent 1px),
+    linear-gradient(90deg, var(--filet) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(72% 62% at 50% 40%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(72% 62% at 50% 40%, #000 0%, transparent 78%);
+}
+
+.hero .conteneur { position: relative; z-index: 1; }
+.hero__contenu { max-width: 900px; }
+
+.hero__titre {
+  font-size: var(--t-hero);
+  font-weight: 600;
+  letter-spacing: -.035em;
+}
+.hero__titre .ligne-or {
+  display: block;
+  font-weight: 300;
+  color: var(--texte-doux);
+}
+.hero__titre em {
+  font-style: normal;
+  color: var(--or-clair);
+}
+
+.hero__chapo {
+  margin-top: 1.6rem;
+  max-width: 62ch;
+  color: var(--texte-doux);
+  font-size: var(--t-chapo);
+  font-weight: 300;
+  line-height: 1.68;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  margin-top: 2.4rem;
+}
+
+/* --- Bandeau de chiffres clés sous le hero --- */
+.hero__reperes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(3rem, 7vw, 5rem);
+  background: var(--filet);          /* le fond fait office de filets 1px */
+  border-radius: var(--r-m);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+.repere { background: var(--noir); padding: 1.4rem 1.35rem; }
+.repere__val {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--or-clair);
+}
+.repere__lib {
+  display: block;
+  margin-top: .3rem;
+  font-size: var(--t-micro);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+
+/* ==========================================================================
+   07. LE GROUPE / GOUVERNANCE
+   ========================================================================== */
+.groupe__grille {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+.groupe__texte p { color: var(--texte-doux); font-weight: 300; }
+.groupe__texte p strong { color: var(--texte); font-weight: 500; }
+
+/* Liste « ce qui nous définit » */
+.liste-marquee { margin-top: 2rem; display: grid; gap: 1rem; }
+.liste-marquee li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--texte-doux);
+  font-weight: 300;
+}
+.liste-marquee li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: .68em;
+  width: 8px; height: 1px;
+  background: var(--or);
+}
+
+/* --- Cartes de gouvernance --- */
+.gouvernance { display: grid; gap: 1rem; }
+.dirigeant {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.35rem 1.4rem;
+}
+.dirigeant:hover { background: var(--noir-4); }
+.dirigeant__initiales {
+  flex: none;
+  width: 54px; height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(200,150,30,.22), rgba(200,150,30,.05));
+  box-shadow: inset 0 0 0 1px var(--filet-or);
+  color: var(--or-clair);
+  font-size: .95rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+}
+.dirigeant__nom { font-size: var(--t-h3); font-weight: 500; letter-spacing: -.01em; }
+.dirigeant__role {
+  margin-top: .15rem;
+  font-size: var(--t-petit);
+  color: var(--texte-faible);
+  letter-spacing: .04em;
+}
+
+.encart-siege {
+  margin-top: .35rem;
+  padding: 1.35rem 1.4rem;
+  font-size: var(--t-petit);
+  color: var(--texte-doux);
+  line-height: 1.75;
+}
+.encart-siege dt {
+  font-size: var(--t-micro);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+.encart-siege dd { margin: .15rem 0 .9rem; }
+.encart-siege dd:last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   08. NOTRE MODÈLE — processus en 5 étapes
+   ========================================================================== */
+.modele__etapes {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+}
+/* Ligne de liaison horizontale derrière les pastilles numérotées */
+.modele__etapes::before {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--filet-or), var(--filet-or) 55%, var(--filet));
+}
+
+.etape { position: relative; }
+.etape__num {
+  position: relative;
+  z-index: 1;
+  width: 42px; height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--noir);
+  box-shadow: inset 0 0 0 1px var(--filet-or);
+  color: var(--or-clair);
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  transition: background-color var(--duree) var(--courbe), box-shadow var(--duree) var(--courbe);
+}
+.etape:hover .etape__num { background: rgba(200,150,30,.12); box-shadow: inset 0 0 0 1px var(--or); }
+.etape__titre { margin-top: 1.15rem; font-size: 1rem; font-weight: 500; letter-spacing: -.005em; }
+.etape__desc { margin-top: .5rem; font-size: var(--t-petit); color: var(--texte-doux); font-weight: 300; line-height: 1.66; }
+
+/* Encart de synthèse sous le processus */
+.modele__synthese {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  border-radius: var(--r-l);
+  background:
+    linear-gradient(120deg, rgba(10,108,255,.08), transparent 55%),
+    var(--noir-3);
+  box-shadow: inset 0 0 0 1px var(--filet);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.4rem;
+  align-items: start;
+}
+.modele__synthese .ico-bloc {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: var(--r-s);
+  background: rgba(10,108,255,.12);
+  color: var(--bleu-clair);
+  flex: none;
+}
+.modele__synthese p { color: var(--texte-doux); font-weight: 300; max-width: var(--largeur-texte); }
+
+/* ==========================================================================
+   09. NOS ENTREPRISES — pôles et participations
+   ========================================================================== */
+.poles { display: grid; gap: clamp(1.5rem, 3vw, 2.2rem); }
+
+/* Cartes des deux entités nommées */
+.poles__nommes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+
+.entite {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  overflow: hidden;
+}
+.entite:hover { background: var(--noir-4); box-shadow: inset 0 0 0 1px var(--filet-fort), var(--ombre-carte); transform: translateY(-2px); }
+
+/* Liseré coloré en haut de carte : or = détenue, bleu = en acquisition */
+.entite::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--or), transparent 70%);
+}
+.entite--acquisition::before { background: linear-gradient(90deg, var(--bleu), transparent 70%); }
+
+.entite__tete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.entite__pole {
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+.entite__nom {
+  margin-top: .55rem;
+  font-size: var(--t-h3);
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.entite__desc {
+  margin-top: .9rem;
+  color: var(--texte-doux);
+  font-weight: 300;
+  font-size: var(--t-petit);
+  line-height: 1.7;
+}
+.entite__pied {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+/* Précision affichée sous le statut (ex. « pas encore détenue ») */
+.entite__note {
+  font-size: var(--t-micro);
+  color: var(--texte-faible);
+  font-style: normal;
+  line-height: 1.6;
+}
+
+/* --- Pôles à venir --- */
+.avenir {
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+}
+.avenir__tete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.avenir__titre { font-size: var(--t-h3); font-weight: 500; }
+.avenir__liste {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--filet);
+  border-radius: var(--r-m);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+.avenir__item {
+  background: var(--noir-3);
+  padding: 1.15rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  font-size: var(--t-petit);
+  color: var(--texte-doux);
+  transition: background-color var(--duree) var(--courbe);
+}
+.avenir__item:hover { background: var(--noir-4); }
+.avenir__item .ico { width: 18px; height: 18px; color: var(--texte-faible); flex: none; }
+.avenir__note {
+  margin-top: 1.1rem;
+  font-size: var(--t-micro);
+  color: var(--texte-faible);
+  letter-spacing: .01em;
+}
+
+/* ==========================================================================
+   10. CROISSANCE & ACQUISITIONS
+   ========================================================================== */
+.croissance__grille {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+.axe { padding: clamp(1.5rem, 3vw, 2rem); }
+.axe:hover { background: var(--noir-4); }
+.axe__ico {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: var(--r-s);
+  background: rgba(200,150,30,.1);
+  color: var(--or-clair);
+  margin-bottom: 1.15rem;
+}
+.axe__ico .ico { width: 20px; height: 20px; }
+.axe__titre { font-size: 1.02rem; font-weight: 500; }
+.axe__desc { margin-top: .6rem; font-size: var(--t-petit); color: var(--texte-doux); font-weight: 300; line-height: 1.7; }
+
+/* Bande d'appel à l'action « Céder son entreprise » */
+.bande-cta {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(1.8rem, 3.5vw, 2.6rem);
+  border-radius: var(--r-l);
+  background:
+    radial-gradient(70% 160% at 88% 50%, rgba(200,150,30,.14), transparent 62%),
+    var(--noir-3);
+  box-shadow: inset 0 0 0 1px var(--filet-or);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+.bande-cta h3 { font-size: var(--t-h3); font-weight: 500; }
+.bande-cta p { margin-top: .5rem; color: var(--texte-doux); font-weight: 300; font-size: var(--t-petit); max-width: 58ch; }
+
+/* ==========================================================================
+   11. CÉDER SON ENTREPRISE + FORMULAIRES
+   ========================================================================== */
+.ceder__grille {
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  gap: clamp(2rem, 4.5vw, 3.5rem);
+  align-items: start;
+}
+
+.critere-bloc + .critere-bloc { margin-top: 2rem; }
+.critere-bloc h3 {
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--or-clair);
+  margin-bottom: 1rem;
+}
+.puces { display: grid; gap: .7rem; }
+.puces li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: var(--t-petit);
+  color: var(--texte-doux);
+  font-weight: 300;
+  line-height: 1.65;
+}
+.puces li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: .62em;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--or);
+}
+
+.avertissement {
+  margin-top: 2rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--r-m);
+  background: rgba(243,239,233,.035);
+  box-shadow: inset 0 0 0 1px var(--filet);
+  font-size: var(--t-micro);
+  color: var(--texte-faible);
+  line-height: 1.7;
+}
+
+/* --- Formulaires --- */
+.form-bloc { padding: clamp(1.6rem, 3vw, 2.4rem); }
+
+.form-grille {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+.champ { display: flex; flex-direction: column; gap: .45rem; }
+.champ--plein { grid-column: 1 / -1; }
+
+.champ label {
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+.champ label .requis { color: var(--or); margin-left: .15rem; }
+
+.champ input,
+.champ select,
+.champ textarea {
+  width: 100%;
+  padding: .78rem .9rem;
+  background: rgba(13, 11, 8, .75);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: .9rem;
+  border: 0;
+  border-radius: var(--r-s);
+  box-shadow: inset 0 0 0 1px var(--filet-fort);
+  transition: box-shadow var(--duree) var(--courbe), background-color var(--duree) var(--courbe);
+}
+.champ textarea { resize: vertical; min-height: 118px; line-height: 1.6; }
+
+/* Flèche du select dessinée en CSS (aucune image, aucune icône externe) */
+.champ select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--texte-doux) 50%),
+                    linear-gradient(135deg, var(--texte-doux) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% + 1px), calc(100% - 13px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2.4rem;
+}
+.champ select option { background: var(--noir-2); color: var(--texte); }
+
+.champ input::placeholder,
+.champ textarea::placeholder { color: var(--texte-faible); opacity: .75; }
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus {
+  outline: none;
+  background: rgba(13, 11, 8, .95);
+  box-shadow: inset 0 0 0 1px var(--bleu), 0 0 0 3px rgba(10,108,255,.16);
+}
+
+/* État d'erreur posé par la validation JS */
+.champ.est-invalide input,
+.champ.est-invalide select,
+.champ.est-invalide textarea { box-shadow: inset 0 0 0 1px #E0564B; }
+.champ__erreur {
+  font-size: var(--t-micro);
+  color: #F08C82;
+  min-height: 0;
+}
+
+/* Case à cocher RGPD — non pré-cochée dans le HTML */
+.champ-consentement {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  margin-top: .3rem;
+}
+.champ-consentement input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 18px; height: 18px;
+  margin: 2px 0 0;
+  padding: 0;
+  border-radius: 4px;
+  background: rgba(13,11,8,.75);
+  box-shadow: inset 0 0 0 1px var(--filet-fort);
+  cursor: pointer;
+  transition: background-color var(--duree-rapide) var(--courbe), box-shadow var(--duree-rapide) var(--courbe);
+}
+.champ-consentement input[type="checkbox"]:checked {
+  background: var(--bleu);
+  box-shadow: inset 0 0 0 1px var(--bleu);
+  /* Coche dessinée en SVG inline encodé : aucune requête réseau */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-6'/%3E%3C/svg%3E");
+  background-size: 13px 13px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.champ-consentement label {
+  font-size: var(--t-micro);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--texte-faible);
+  line-height: 1.65;
+  cursor: pointer;
+}
+.champ-consentement.est-invalide label { color: #F08C82; }
+
+.form-pied {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+.mention-confidentialite {
+  display: flex;
+  align-items: flex-start;
+  gap: .55rem;
+  font-size: var(--t-micro);
+  color: var(--texte-faible);
+  line-height: 1.6;
+  max-width: 46ch;
+}
+.mention-confidentialite .ico { width: 15px; height: 15px; flex: none; margin-top: 2px; color: var(--or); }
+
+/* Message de retour après envoi (succès ou échec) */
+.form-retour {
+  grid-column: 1 / -1;
+  display: none;
+  align-items: flex-start;
+  gap: .7rem;
+  margin-top: 1.1rem;
+  padding: .95rem 1.1rem;
+  border-radius: var(--r-m);
+  font-size: var(--t-petit);
+  line-height: 1.6;
+}
+.form-retour.est-visible { display: flex; }
+.form-retour--succes {
+  background: rgba(200,150,30,.1);
+  box-shadow: inset 0 0 0 1px var(--filet-or);
+  color: var(--texte);
+}
+.form-retour--erreur {
+  background: rgba(224,86,75,.1);
+  box-shadow: inset 0 0 0 1px rgba(224,86,75,.4);
+  color: #F5C2BD;
+}
+.form-retour .ico { width: 17px; height: 17px; flex: none; margin-top: 2px; }
+
+/* Champ pot-de-miel : invisible pour l'humain, rempli par les robots */
+.pot-de-miel {
+  position: absolute;
+  left: -9999px;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   12. CONTACT
+   ========================================================================== */
+.contact__grille {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: clamp(2rem, 4.5vw, 3.5rem);
+  align-items: start;
+}
+.coordonnees { display: grid; gap: 1px; background: var(--filet); border-radius: var(--r-m); overflow: hidden; box-shadow: inset 0 0 0 1px var(--filet); }
+.coordonnee {
+  background: var(--noir-3);
+  padding: 1.25rem 1.35rem;
+  display: flex;
+  gap: .95rem;
+  align-items: flex-start;
+}
+.coordonnee .ico { width: 18px; height: 18px; color: var(--or); flex: none; margin-top: 3px; }
+.coordonnee__lib {
+  font-size: var(--t-micro);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+.coordonnee__val { margin-top: .25rem; font-size: .92rem; color: var(--texte); line-height: 1.6; }
+.coordonnee__val a { color: var(--texte); }
+.coordonnee__val a:hover { color: var(--or-clair); }
+
+/* ==========================================================================
+   13. PIED DE PAGE
+   ========================================================================== */
+.pied {
+  padding-block: clamp(3rem, 6vw, 4.5rem) 2rem;
+  background: var(--noir-2);
+  box-shadow: inset 0 1px 0 var(--filet);
+}
+.pied__haut {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding-bottom: 2.5rem;
+}
+.pied__desc {
+  margin-top: 1.15rem;
+  max-width: 42ch;
+  font-size: var(--t-petit);
+  color: var(--texte-faible);
+  font-weight: 300;
+  line-height: 1.75;
+}
+.pied__titre {
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  margin-bottom: 1.1rem;
+}
+.pied__liens { display: grid; gap: .7rem; }
+.pied__liens a { color: var(--texte-faible); font-size: var(--t-petit); }
+.pied__liens a:hover { color: var(--or-clair); }
+
+.pied__bas {
+  padding-top: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: var(--t-micro);
+  color: var(--texte-faible);
+}
+.pied__bas .liens-legaux { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.pied__bas a { color: var(--texte-faible); }
+.pied__bas a:hover { color: var(--or-clair); }
+
+/* ==========================================================================
+   14. BANDEAU COOKIES
+   ========================================================================== */
+.cookies {
+  position: fixed;
+  z-index: 120;
+  left: var(--gouttiere);
+  right: var(--gouttiere);
+  bottom: var(--gouttiere);
+  max-width: 640px;
+  margin-inline: auto;
+  padding: 1.35rem 1.5rem;
+  border-radius: var(--r-l);
+  background: rgba(20, 16, 16, .97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 0 0 0 1px var(--filet-fort), 0 24px 60px -22px rgba(0,0,0,.95);
+  /* Masqué par défaut : le JS ne l'affiche que si aucun choix n'est enregistré */
+  display: none;
+  transform: translateY(18px);
+  opacity: 0;
+  transition: transform var(--duree-lente) var(--courbe), opacity var(--duree-lente) var(--courbe);
+}
+.cookies.est-affiche { display: block; }
+.cookies.est-visible { transform: translateY(0); opacity: 1; }
+.cookies__titre {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .95rem;
+  font-weight: 500;
+  margin-bottom: .6rem;
+}
+.cookies__titre .ico { width: 17px; height: 17px; color: var(--or); }
+.cookies p { font-size: var(--t-micro); color: var(--texte-doux); line-height: 1.7; font-weight: 300; }
+.cookies__actions { display: flex; gap: .7rem; margin-top: 1.15rem; flex-wrap: wrap; }
+.cookies__actions .btn { padding: .68rem 1.25rem; }
+
+/* ==========================================================================
+   15. PAGES ANNEXES (mentions légales, politique de confidentialité)
+   ========================================================================== */
+.page-legale { padding-block: clamp(8rem, 14vh, 10rem) var(--section-y); }
+.page-legale .conteneur { max-width: 860px; }
+.page-legale h1 { font-size: var(--t-h2); }
+.page-legale .maj {
+  margin-top: .9rem;
+  font-size: var(--t-micro);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+.page-legale h2 {
+  margin-top: 3rem;
+  font-size: 1.16rem;
+  font-weight: 500;
+  color: var(--or-clair);
+}
+.page-legale h3 { margin-top: 1.8rem; font-size: 1rem; font-weight: 500; }
+.page-legale p,
+.page-legale li { color: var(--texte-doux); font-weight: 300; }
+.page-legale ul { margin: 1rem 0; display: grid; gap: .6rem; }
+.page-legale ul li { position: relative; padding-left: 1.4rem; }
+.page-legale ul li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: .68em;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--or);
+}
+.page-legale dl { margin: 1rem 0; display: grid; gap: .85rem; }
+.page-legale dt { font-size: var(--t-micro); letter-spacing: .12em; text-transform: uppercase; color: var(--texte-faible); }
+.page-legale dd { margin: .2rem 0 0; color: var(--texte-doux); font-weight: 300; }
+.retour-accueil { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 2rem; font-size: var(--t-petit); }
+.retour-accueil .ico { width: 14px; height: 14px; transition: transform var(--duree) var(--courbe); }
+.retour-accueil:hover .ico { transform: translateX(-3px); }
+
+/* Tableau des cookies / durées */
+.table-legale { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: var(--t-petit); }
+.table-legale th,
+.table-legale td { text-align: left; padding: .8rem .9rem; box-shadow: inset 0 -1px 0 var(--filet); }
+.table-legale th { color: var(--texte); font-weight: 500; font-size: var(--t-micro); letter-spacing: .1em; text-transform: uppercase; }
+.table-legale td { color: var(--texte-doux); font-weight: 300; }
+.table-wrap { overflow-x: auto; }
+
+/* ==========================================================================
+   16. ANIMATIONS D'APPARITION
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--duree-lente) var(--courbe), transform var(--duree-lente) var(--courbe);
+  /* will-change évite un repaint coûteux au moment du déclenchement */
+  will-change: opacity, transform;
+}
+.reveal.est-vu { opacity: 1; transform: none; }
+
+/* Respect strict de la préférence système « mouvement réduit » */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   17. RESPONSIVE
+   ========================================================================== */
+
+/* --- Tablette large --- */
+@media (max-width: 1080px) {
+  .modele__etapes { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 2.4rem; }
+  .modele__etapes::before { display: none; }
+  .croissance__grille { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .avenir__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* --- Tablette / bascule du menu --- */
+@media (max-width: 900px) {
+  html { scroll-padding-top: 80px; }
+
+  .burger { display: block; }
+
+  /* Le menu devient un panneau plein écran, ouvert par le hamburger */
+  .nav {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: .35rem;
+    padding: 5.5rem var(--gouttiere) 2.5rem;
+    background: rgba(13, 11, 8, .985);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    overflow-y: auto;
+    /* Fermé par défaut, sans être retiré du flux pour garder la transition */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity var(--duree) var(--courbe),
+                transform var(--duree) var(--courbe),
+                visibility 0s linear var(--duree);
+  }
+  .nav.est-ouvert {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+  .nav__lien {
+    padding: .95rem .25rem;
+    font-size: 1.05rem;
+    box-shadow: inset 0 -1px 0 var(--filet);
+  }
+  .nav__lien::after { display: none; }
+  .nav__lien.est-actif { color: var(--or-clair); }
+  .nav .btn { margin-top: 1.5rem; width: 100%; padding: .9rem 1.5rem; font-size: .9rem; }
+
+  /* La marque reste visible par-dessus le panneau ouvert */
+  .entete .marque { position: relative; z-index: 115; }
+
+  .groupe__grille,
+  .ceder__grille,
+  .contact__grille { grid-template-columns: 1fr; }
+
+  .poles__nommes { grid-template-columns: 1fr; }
+  .hero__reperes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pied__haut { grid-template-columns: 1fr 1fr; }
+  .pied__marque { grid-column: 1 / -1; }
+}
+
+/* --- Mobile --- */
+@media (max-width: 620px) {
+  .modele__etapes { grid-template-columns: 1fr; row-gap: 1.9rem; }
+  .croissance__grille { grid-template-columns: 1fr; }
+  .avenir__liste { grid-template-columns: 1fr; }
+  .form-grille { grid-template-columns: 1fr; }
+  .modele__synthese { grid-template-columns: 1fr; }
+  .hero__actions .btn { width: 100%; }
+  .bande-cta { flex-direction: column; align-items: flex-start; }
+  .bande-cta .btn { width: 100%; }
+  .pied__haut { grid-template-columns: 1fr; }
+  .cookies { left: .85rem; right: .85rem; bottom: .85rem; padding: 1.2rem 1.25rem; }
+  .cookies__actions .btn { flex: 1 1 130px; }
+  .marque__forme { display: none; }
+}
+
+/* --- Très petits écrans --- */
+@media (max-width: 380px) {
+  .hero__reperes { grid-template-columns: 1fr; }
+}
+
+/* --- Impression (mentions légales notamment) --- */
+@media print {
+  .entete, .cookies, .pied, .nav, .burger { display: none !important; }
+  body { background: #fff; color: #111; }
+  .page-legale p, .page-legale li, .page-legale dd { color: #333; }
+}

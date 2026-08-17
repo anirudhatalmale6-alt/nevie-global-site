@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ==========================================================================
+     SEO — titre, description, canonique et données structurées.
+     Remplacer https://www.nevie-global.fr/ par le domaine définitif avant
+     la mise en production (voir README, section « Avant mise en ligne »).
+     ========================================================================== -->
+<title>NEVIE-GLOBAL SAS — Holding d'investissement et d'acquisition | Nantes</title>
+<meta name="description" content="NEVIE-GLOBAL SAS est une holding française basée à Nantes qui construit un portefeuille d'entreprises par acquisitions successives, organisé en pôles : technologie, textile et ennoblissement, industrie et services.">
+<meta name="author" content="NEVIE-GLOBAL SAS">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0D0B08">
+<link rel="canonical" href="https://www.nevie-global.fr/">
+
+<!-- Partage sur les réseaux et messageries -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="NEVIE-GLOBAL SAS">
+<meta property="og:title" content="NEVIE-GLOBAL SAS — Holding d'investissement et d'acquisition">
+<meta property="og:description" content="Une holding française qui structure et développe un portefeuille d'entreprises par acquisitions successives.">
+<meta property="og:url" content="https://www.nevie-global.fr/">
+<meta property="og:image" content="https://www.nevie-global.fr/assets/img/og-nevie-global.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Emblème NEVIE-GLOBAL SAS sur fond sombre">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NEVIE-GLOBAL SAS — Holding d'investissement et d'acquisition">
+<meta name="twitter:description" content="Une holding française qui structure et développe un portefeuille d'entreprises par acquisitions successives.">
+<meta name="twitter:image" content="https://www.nevie-global.fr/assets/img/og-nevie-global.jpg">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/embleme-n.svg">
+
+<!-- Préchargement des deux graisses réellement visibles au-dessus de la ligne
+     de flottaison : évite le « saut » de police et améliore le LCP. -->
+<link rel="preload" href="assets/fonts/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/poppins-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<!-- Données structurées : aide les moteurs à identifier l'entité juridique -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "NEVIE-GLOBAL SAS",
+  "legalName": "NEVIE-GLOBAL SAS",
+  "url": "https://www.nevie-global.fr/",
+  "logo": "https://www.nevie-global.fr/assets/img/embleme-n.svg",
+  "description": "Société holding française qui structure et développe un portefeuille d'entreprises par acquisitions successives.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2 Place Jean V, bureau 3",
+    "postalCode": "44000",
+    "addressLocality": "Nantes",
+    "addressCountry": "FR"
+  },
+  "employee": [
+    { "@type": "Person", "name": "Elisa Varinot", "jobTitle": "Présidente" },
+    { "@type": "Person", "name": "Emmanuel Varinot", "jobTitle": "Directeur Général" }
+  ],
+  "subOrganization": {
+    "@type": "Organization",
+    "name": "NEVIE-GLOBAL LIMITED",
+    "url": "https://nevie-global.com"
+  }
+}
+</script>
+</head>
+
+<body>
+
+<a class="saut-contenu" href="#accueil">Aller au contenu principal</a>
+
+<!-- ==========================================================================
+     BIBLIOTHÈQUE D'ICÔNES
+     Toutes les icônes du site sont regroupées dans un unique sprite SVG inline.
+     Aucune police d'icônes, aucun fichier externe : zéro requête réseau
+     supplémentaire et aucun décalage de mise en page au chargement.
+     ========================================================================== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true" focusable="false">
+  <symbol id="i-fleche-droite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-fleche-gauche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-externe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5M19 5l-8 8M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
+  <symbol id="i-bouclier" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 7.2-7 9-4-1.8-7-5-7-9V6z"/><path d="M9.2 12l2 2 3.6-3.8"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5 10-11"/></symbol>
+  <symbol id="i-alerte" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.3v.2"/></symbol>
+  <symbol id="i-immeuble" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v15M14 20V10h4a1 1 0 0 1 1 1v9"/><path d="M9 8h2M9 12h2M9 16h2"/></symbol>
+  <symbol id="i-courrier" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
+  <symbol id="i-broche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.5 9.5h17M3.5 14.5h17M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
+  <symbol id="i-cible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></symbol>
+  <symbol id="i-couches" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l8.5 4.6L12 12.7 3.5 8.1z"/><path d="M3.5 12.4L12 17l8.5-4.6M3.5 16.4L12 21l8.5-4.6"/></symbol>
+  <!-- Transmission : deux flux qui s'échangent -->
+  <symbol id="i-poignee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h15M15 5l4 4-4 4"/><path d="M20 17H5M9 13l-4 4 4 4"/></symbol>
+  <symbol id="i-cadenas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.9 12.3A9 9 0 1 1 11.7 3.1a3.4 3.4 0 0 0 4.5 4 3.4 3.4 0 0 0 4.7 5.2z"/><path d="M9 9.5v.01M8 14.5v.01M13.5 14v.01"/></symbol>
+  <symbol id="i-engrenage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M4.5 7.8l2.1 1.2M17.4 15l2.1 1.2M4.5 16.2l2.1-1.2M17.4 9l2.1-1.2"/></symbol>
+</svg>
+
+<!-- ==========================================================================
+     EN-TÊTE — navigation ancrée à défilement fluide
+     ========================================================================== -->
+<header class="entete" id="entete">
+  <div class="conteneur entete__inner">
+
+    <a class="marque" href="#accueil" aria-label="NEVIE-GLOBAL SAS — retour en haut de page">
+      <svg class="marque__embleme" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="or-entete" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#D4A520"/>
+            <stop offset="100%" stop-color="#C8961E"/>
+          </linearGradient>
+        </defs>
+        <rect x="1" y="1" width="62" height="62" rx="15" fill="#0D0B08" stroke="#C8961E" stroke-opacity=".45" stroke-width="1.5"/>
+        <path d="M19 46V18h6l14 20V18h6v28h-6L25 26v20z" fill="url(#or-entete)"/>
+      </svg>
+      <span class="marque__texte">
+        <span class="marque__nom">NEVIE<span>-</span>GLOBAL</span>
+        <span class="marque__forme">Holding</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navigation principale">
+      <a class="nav__lien" href="#groupe">Le Groupe</a>
+      <a class="nav__lien" href="#modele">Notre Modèle</a>
+      <a class="nav__lien" href="#entreprises">Nos Entreprises</a>
+      <a class="nav__lien" href="#croissance">Croissance</a>
+      <a class="nav__lien" href="#ceder">Céder son entreprise</a>
+      <a class="btn btn--secondaire" href="#contact">Contact</a>
+    </nav>
+
+    <button class="burger" id="burger" type="button"
+            aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav">
+      <span class="burger__barres" aria-hidden="true"><i></i></span>
+    </button>
+
+  </div>
+</header>
+
+<main id="contenu">
+
+  <!-- ========================================================================
+       HERO
+       ======================================================================== -->
+  <section class="hero" id="accueil">
+    <div class="hero__fond" aria-hidden="true"></div>
+    <div class="hero__grille" aria-hidden="true"></div>
+
+    <div class="conteneur">
+      <div class="hero__contenu">
+        <p class="eyebrow">Société holding — Nantes, France</p>
+
+        <h1 class="hero__titre">
+          Construire un groupe,
+          <span class="ligne-or">entreprise <em>par entreprise</em>.</span>
+        </h1>
+
+        <p class="hero__chapo">
+          NEVIE-GLOBAL SAS est une société holding française. Nous constituons et développons
+          un portefeuille d'entreprises par acquisitions successives, organisé en pôles :
+          technologie, textile et ennoblissement, industrie et services.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primaire" href="#modele">
+            Découvrir notre modèle
+            <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-fleche-droite"></use></svg>
+          </a>
+          <a class="btn btn--secondaire" href="#ceder">Céder son entreprise</a>
+        </div>
+
+        <!-- Repères chiffrés : lecture du groupe en un coup d'œil -->
+        <div class="hero__reperes reveal">
+          <div class="repere">
+            <span class="repere__val">1</span>
+            <span class="repere__lib">Filiale détenue</span>
+          </div>
+          <div class="repere">
+            <span class="repere__val">1</span>
+            <span class="repere__lib">Acquisition en cours</span>
+          </div>
+          <div class="repere">
+            <span class="repere__val">4</span>
+            <span class="repere__lib">Pôles à venir</span>
+          </div>
+          <div class="repere">
+            <span class="repere__val">FR&nbsp;/&nbsp;UK</span>
+            <span class="repere__lib">Implantations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       LE GROUPE — histoire courte, vision, gouvernance
+       ======================================================================== -->
+  <section class="section section--alt" id="groupe">
+    <div class="conteneur">
+
+      <div class="section-tete reveal">
+        <p class="eyebrow">Le Groupe</p>
+        <h2>Une holding qui investit dans la durée, pas dans l'instant.</h2>
+        <p class="chapo">
+          NEVIE-GLOBAL SAS réunit sous une même structure des entreprises aux métiers distincts,
+          avec une même exigence : la continuité de l'activité, des équipes et du savoir-faire.
+        </p>
+      </div>
+
+      <div class="groupe__grille">
+
+        <div class="groupe__texte reveal">
+          <p>
+            Le groupe s'est construit autour d'une conviction simple : beaucoup d'entreprises
+            solides, rentables et utiles à leur territoire n'ont pas de repreneur. Nous les
+            reprenons pour les faire durer, pas pour les démanteler.
+          </p>
+          <p>
+            NEVIE-GLOBAL SAS assure le rôle de tête de groupe : <strong>stratégie d'acquisition,
+            gouvernance, financement et pilotage</strong>. Les métiers, eux, restent au niveau des
+            entreprises, avec leurs équipes, leurs marques et leurs clients.
+          </p>
+          <p>
+            Le portefeuille se construit par pôles. Chaque pôle réunit des entreprises dont les
+            compétences se renforcent mutuellement, plutôt qu'une addition d'actifs sans lien.
+          </p>
+
+          <ul class="liste-marquee">
+            <li><strong>Horizon long.</strong> Nous n'avons pas de date de sortie imposée par un fonds.</li>
+            <li><strong>Continuité.</strong> Les équipes, les marques et les sites sont maintenus.</li>
+            <li><strong>Discrétion.</strong> Les discussions de reprise restent strictement confidentielles.</li>
+            <li><strong>Décision rapide.</strong> Une structure courte, sans comité d'investissement à rallonge.</li>
+          </ul>
+        </div>
+
+        <!-- Gouvernance -->
+        <div class="reveal">
+          <p class="eyebrow">Gouvernance</p>
+
+          <div class="gouvernance">
+            <div class="carte dirigeant">
+              <span class="dirigeant__initiales" aria-hidden="true">EV</span>
+              <div>
+                <p class="dirigeant__nom">Elisa Varinot</p>
+                <p class="dirigeant__role">Présidente</p>
+              </div>
+            </div>
+
+            <div class="carte dirigeant">
+              <span class="dirigeant__initiales" aria-hidden="true">EV</span>
+              <div>
+                <p class="dirigeant__nom">Emmanuel Varinot</p>
+                <p class="dirigeant__role">Directeur Général — Fondateur</p>
+              </div>
+            </div>
+
+            <dl class="carte encart-siege">
+              <dt>Forme juridique</dt>
+              <dd>Société par actions simplifiée (SAS)</dd>
+              <dt>Capital social</dt>
+              <dd>50 €</dd>
+              <dt>Siège social</dt>
+              <dd>2 Place Jean V, bureau 3<br>44000 Nantes, France</dd>
+            </dl>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       NOTRE MODÈLE — mécanique de la holding en cinq étapes
+       ======================================================================== -->
+  <section class="section" id="modele">
+    <div class="conteneur">
+
+      <div class="section-tete reveal">
+        <p class="eyebrow">Notre Modèle</p>
+        <h2>De la rencontre à la croissance, une mécanique en cinq temps.</h2>
+        <p class="chapo">
+          La holding intervient à chaque étape du cycle d'une reprise. Le même processus
+          s'applique quel que soit le pôle concerné.
+        </p>
+      </div>
+
+      <ol class="modele__etapes reveal">
+        <li class="etape">
+          <span class="etape__num">01</span>
+          <h3 class="etape__titre">Sourcing</h3>
+          <p class="etape__desc">
+            Identification des entreprises à céder, par approche directe, réseau professionnel
+            et candidatures spontanées de dirigeants.
+          </p>
+        </li>
+        <li class="etape">
+          <span class="etape__num">02</span>
+          <h3 class="etape__titre">Analyse</h3>
+          <p class="etape__desc">
+            Examen de l'activité, des comptes, du carnet de commandes et des équipes.
+            Nous mesurons la solidité réelle, pas la promesse.
+          </p>
+        </li>
+        <li class="etape">
+          <span class="etape__num">03</span>
+          <h3 class="etape__titre">Reprise</h3>
+          <p class="etape__desc">
+            Structuration de l'opération et du financement, puis reprise du capital
+            dans un calendrier défini avec le cédant.
+          </p>
+        </li>
+        <li class="etape">
+          <span class="etape__num">04</span>
+          <h3 class="etape__titre">Intégration</h3>
+          <p class="etape__desc">
+            Rattachement au pôle concerné, mise en place du reporting et des fonctions
+            support mutualisées, sans rupture pour les clients.
+          </p>
+        </li>
+        <li class="etape">
+          <span class="etape__num">05</span>
+          <h3 class="etape__titre">Développement</h3>
+          <p class="etape__desc">
+            Investissement, modernisation des outils et recherche de synergies entre
+            les entreprises d'un même pôle.
+          </p>
+        </li>
+      </ol>
+
+      <div class="modele__synthese reveal">
+        <span class="ico-bloc" aria-hidden="true">
+          <svg class="ico" width="20" height="20"><use href="#i-couches"></use></svg>
+        </span>
+        <div>
+          <h3 class="etape__titre">Le rôle de la tête de groupe</h3>
+          <p>
+            NEVIE-GLOBAL SAS ne se substitue pas aux équipes en place. Elle apporte le cadre —
+            capital, gouvernance, arbitrages d'investissement — et laisse chaque entreprise
+            conduire son métier. Les activités opérationnelles détaillées relèvent des filiales
+            et non de la holding.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       NOS ENTREPRISES — participations par pôle
+       Statuts affichés strictement : Détenue / En acquisition / À venir.
+       ======================================================================== -->
+  <section class="section section--alt" id="entreprises">
+    <div class="conteneur">
+
+      <div class="section-tete reveal">
+        <p class="eyebrow">Nos Entreprises</p>
+        <h2>Nos participations, pôle par pôle.</h2>
+        <p class="chapo">
+          Chaque entreprise est présentée avec son pôle de rattachement et son statut exact
+          au sein du groupe.
+        </p>
+      </div>
+
+      <div class="poles">
+
+        <div class="poles__nommes">
+
+          <!-- Pôle Technologie — filiale détenue -->
+          <article class="carte entite reveal">
+            <div class="entite__tete">
+              <div>
+                <p class="entite__pole">Pôle Technologie</p>
+                <h3 class="entite__nom">NEVIE-GLOBAL LIMITED</h3>
+              </div>
+              <span class="badge badge--detenue">Détenue</span>
+            </div>
+            <p class="entite__desc">
+              Filiale technologique du groupe, immatriculée au Royaume-Uni. Elle porte les
+              activités d'intelligence artificielle, d'objets connectés portés (wearables)
+              et de blockchain, avec sa propre marque et son propre site.
+            </p>
+            <div class="entite__pied">
+              <a class="lien-fleche" href="https://nevie-global.com" target="_blank" rel="noopener noreferrer">
+                nevie-global.com
+                <svg class="ico" width="14" height="14" aria-hidden="true"><use href="#i-externe"></use></svg>
+                <span class="sr-only">(nouvelle fenêtre)</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Pôle Textile / ennoblissement — société en cours d'acquisition -->
+          <article class="carte entite entite--acquisition reveal">
+            <div class="entite__tete">
+              <div>
+                <p class="entite__pole">Pôle Textile / Ennoblissement</p>
+                <h3 class="entite__nom">TECHNIFLOC-DIFFUSION</h3>
+              </div>
+              <span class="badge badge--acquisition">En acquisition</span>
+            </div>
+            <p class="entite__desc">
+              Société spécialisée dans l'ennoblissement textile, actuellement en cours
+              d'acquisition par NEVIE-GLOBAL SAS. Elle constituera le socle du pôle
+              textile et industrie du groupe.
+            </p>
+            <div class="entite__pied">
+              <p class="entite__note">
+                Opération en cours&nbsp;: l'entreprise n'est à ce jour ni détenue,
+                ni intégrée au périmètre du groupe.
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Pôles annoncés, sans société nommée à ce stade -->
+        <div class="carte avenir reveal">
+          <div class="avenir__tete">
+            <div>
+              <p class="entite__pole">Industrie &amp; Services</p>
+              <h3 class="avenir__titre">Pôles à venir</h3>
+            </div>
+            <span class="badge badge--avenir">À venir</span>
+          </div>
+
+          <ul class="avenir__liste">
+            <li class="avenir__item">
+              <svg class="ico" aria-hidden="true"><use href="#i-engrenage"></use></svg>
+              Fonderie
+            </li>
+            <li class="avenir__item">
+              <svg class="ico" aria-hidden="true"><use href="#i-immeuble"></use></svg>
+              Pompes funèbres
+            </li>
+            <li class="avenir__item">
+              <svg class="ico" aria-hidden="true"><use href="#i-cible"></use></svg>
+              Garage automobile
+            </li>
+            <li class="avenir__item">
+              <svg class="ico" aria-hidden="true"><use href="#i-couches"></use></svg>
+              Mécanique générale
+            </li>
+          </ul>
+
+          <p class="avenir__note">
+            Ces pôles sont annoncés au titre de la stratégie de développement du groupe.
+            Aucune société n'y est associée à ce jour.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CROISSANCE & ACQUISITIONS
+       ======================================================================== -->
+  <section class="section" id="croissance">
+    <div class="conteneur">
+
+      <div class="section-tete reveal">
+        <p class="eyebrow">Croissance &amp; Acquisitions</p>
+        <h2>La croissance du groupe passe par la reprise d'entreprises existantes.</h2>
+        <p class="chapo">
+          Nous ne créons pas d'activités de toutes pièces. Nous reprenons des entreprises
+          établies, avec leurs clients, leurs équipes et leur savoir-faire, puis nous leur
+          donnons les moyens de se développer.
+        </p>
+      </div>
+
+      <div class="croissance__grille">
+
+        <article class="carte axe reveal">
+          <span class="axe__ico" aria-hidden="true">
+            <svg class="ico"><use href="#i-cible"></use></svg>
+          </span>
+          <h3 class="axe__titre">Reprise majoritaire</h3>
+          <p class="axe__desc">
+            Nous privilégions la reprise du capital, seule position qui permet d'engager
+            les investissements nécessaires dans la durée. Une période
+            d'accompagnement avec le cédant est possible.
+          </p>
+        </article>
+
+        <article class="carte axe reveal">
+          <span class="axe__ico" aria-hidden="true">
+            <svg class="ico"><use href="#i-couches"></use></svg>
+          </span>
+          <h3 class="axe__titre">Consolidation par pôle</h3>
+          <p class="axe__desc">
+            Chaque acquisition renforce un pôle existant ou en ouvre un nouveau.
+            Les entreprises d'un même pôle mutualisent leurs moyens sans perdre
+            leur identité commerciale.
+          </p>
+        </article>
+
+        <article class="carte axe reveal">
+          <span class="axe__ico" aria-hidden="true">
+            <svg class="ico"><use href="#i-poignee"></use></svg>
+          </span>
+          <h3 class="axe__titre">Transmission et continuité</h3>
+          <p class="axe__desc">
+            Départ en retraite, transmission sans successeur, réorganisation
+            d'un groupe familial : nous étudions les situations où la continuité
+            de l'entreprise est l'enjeu principal.
+          </p>
+        </article>
+
+      </div>
+
+      <div class="bande-cta reveal">
+        <div>
+          <h3>Vous dirigez une entreprise et envisagez de la céder&nbsp;?</h3>
+          <p>
+            Présentez-nous votre dossier en quelques minutes. Chaque demande est étudiée
+            par la direction du groupe, en toute confidentialité.
+          </p>
+        </div>
+        <a class="btn btn--or" href="#ceder">
+          Déposer un dossier
+          <svg class="ico" width="15" height="15" aria-hidden="true"><use href="#i-fleche-droite"></use></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CÉDER SON ENTREPRISE — critères + formulaire de cession
+       ======================================================================== -->
+  <section class="section section--alt" id="ceder">
+    <div class="conteneur">
+
+      <div class="section-tete reveal">
+        <p class="eyebrow">Céder son entreprise</p>
+        <h2>Ce que nous étudions.</h2>
+        <p class="chapo">
+          Nous examinons chaque dossier au cas par cas. Aucune promesse de prix ni de
+          délai n'est faite avant l'analyse complète de l'entreprise.
+        </p>
+      </div>
+
+      <div class="ceder__grille">
+
+        <div class="reveal">
+          <div class="critere-bloc">
+            <h3>Secteurs étudiés</h3>
+            <ul class="puces">
+              <li>Textile et ennoblissement</li>
+              <li>Fonderie, mécanique générale et sous-traitance industrielle</li>
+              <li>Réparation et entretien automobile</li>
+              <li>Services de proximité, dont pompes funèbres</li>
+              <li>Technologie et logiciel, au titre du pôle technologique</li>
+            </ul>
+          </div>
+
+          <div class="critere-bloc">
+            <h3>Situations étudiées</h3>
+            <ul class="puces">
+              <li>Départ en retraite du dirigeant, sans repreneur identifié</li>
+              <li>Cession classique d'une entreprise saine et rentable</li>
+              <li>Entreprise en difficulté dont l'activité reste viable</li>
+              <li>Réorganisation ou recentrage d'un groupe existant</li>
+            </ul>
+          </div>
+
+          <p class="avertissement">
+            Le dépôt d'un dossier ne constitue ni une offre, ni un engagement d'achat, ni
+            une évaluation de votre entreprise. Il ouvre une prise de contact, sans
+            promesse de prix, de calendrier ni de suite donnée.
+          </p>
+        </div>
+
+        <!-- ---------------------------------------------------------------
+             Formulaire de cession
+             Envoi par e-mail via Formspree (voir assets/js/main.js).
+             Aucune base de données, aucun CRM, aucune donnée conservée sur le site.
+             --------------------------------------------------------------- -->
+        <div class="carte form-bloc reveal">
+          <h3 class="etape__titre" style="margin-bottom:1.4rem">Déposer un dossier de cession</h3>
+
+          <form class="form-grille" id="form-cession" novalidate>
+
+            <!-- Piège à robots : invisible et non focalisable pour un humain -->
+            <div class="pot-de-miel" aria-hidden="true">
+              <label for="cession-site">Ne pas remplir</label>
+              <input type="text" id="cession-site" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="champ champ--plein">
+              <label for="cession-raison-sociale">Raison sociale <span class="requis" aria-hidden="true">*</span></label>
+              <input type="text" id="cession-raison-sociale" name="Raison sociale" required autocomplete="organization" placeholder="Nom de votre société">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="cession-secteur">Secteur d'activité <span class="requis" aria-hidden="true">*</span></label>
+              <input type="text" id="cession-secteur" name="Secteur" required placeholder="Ex. mécanique générale">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="cession-ca">Chiffre d'affaires annuel</label>
+              <input type="text" id="cession-ca" name="Chiffre d'affaires" placeholder="Ex. 1 200 000 €">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="cession-effectif">Effectif</label>
+              <input type="text" id="cession-effectif" name="Effectif" inputmode="numeric" placeholder="Ex. 14 salariés">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="cession-situation">Situation <span class="requis" aria-hidden="true">*</span></label>
+              <select id="cession-situation" name="Situation" required>
+                <option value="" selected disabled>Sélectionner…</option>
+                <option value="Départ en retraite">Départ en retraite</option>
+                <option value="Cession classique">Cession classique</option>
+                <option value="Entreprise en difficulté">Entreprise en difficulté</option>
+                <option value="Autre">Autre</option>
+              </select>
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="cession-nom">Nom et prénom <span class="requis" aria-hidden="true">*</span></label>
+              <input type="text" id="cession-nom" name="Contact" required autocomplete="name" placeholder="Votre nom">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="cession-email">E-mail <span class="requis" aria-hidden="true">*</span></label>
+              <input type="email" id="cession-email" name="email" required autocomplete="email" placeholder="vous@societe.fr">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ champ--plein">
+              <label for="cession-tel">Téléphone</label>
+              <input type="tel" id="cession-tel" name="Téléphone" autocomplete="tel" placeholder="06 00 00 00 00">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ champ--plein">
+              <label for="cession-message">Message</label>
+              <textarea id="cession-message" name="Message" rows="5" placeholder="Contexte de la cession, calendrier envisagé, points d'attention…"></textarea>
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <!-- Consentement RGPD — volontairement NON pré-coché -->
+            <div class="champ-consentement">
+              <input type="checkbox" id="cession-rgpd" name="Consentement RGPD" value="Accordé" required>
+              <label for="cession-rgpd">
+                J'accepte que les informations transmises soient utilisées par NEVIE-GLOBAL SAS
+                pour l'étude de mon dossier de cession. Elles ne sont ni cédées, ni revendues.
+                Voir la <a href="politique-de-confidentialite.html">politique de confidentialité</a>. <span class="requis" aria-hidden="true">*</span>
+              </label>
+            </div>
+            <p class="champ__erreur" data-erreur-consentement></p>
+
+            <div class="form-pied">
+              <p class="mention-confidentialite">
+                <svg class="ico" aria-hidden="true"><use href="#i-cadenas"></use></svg>
+                Les informations transmises sont traitées de manière strictement confidentielle
+                et adressées uniquement à la direction du groupe. Aucune donnée n'est stockée
+                sur ce site.
+              </p>
+              <button class="btn btn--primaire" type="submit" data-libelle="Transmettre mon dossier">
+                Transmettre mon dossier
+              </button>
+            </div>
+
+            <!-- Zone de retour : renseignée par le JS après l'envoi -->
+            <p class="form-retour" data-retour role="status" aria-live="polite"></p>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CONTACT
+       ======================================================================== -->
+  <section class="section" id="contact">
+    <div class="conteneur">
+
+      <div class="section-tete reveal">
+        <p class="eyebrow">Contact</p>
+        <h2>Écrire à la holding.</h2>
+        <p class="chapo">
+          Pour toute demande institutionnelle, partenariat ou question relative au groupe.
+          Les dossiers de cession sont à déposer via le formulaire dédié ci-dessus.
+        </p>
+      </div>
+
+      <div class="contact__grille">
+
+        <div class="coordonnees reveal">
+          <div class="coordonnee">
+            <svg class="ico" aria-hidden="true"><use href="#i-broche"></use></svg>
+            <div>
+              <p class="coordonnee__lib">Siège social</p>
+              <p class="coordonnee__val">
+                NEVIE-GLOBAL SAS<br>
+                2 Place Jean V, bureau 3<br>
+                44000 Nantes, France
+              </p>
+            </div>
+          </div>
+
+          <!-- À REMPLACER : adresse e-mail définitive à communiquer par le client -->
+          <div class="coordonnee">
+            <svg class="ico" aria-hidden="true"><use href="#i-courrier"></use></svg>
+            <div>
+              <p class="coordonnee__lib">E-mail</p>
+              <p class="coordonnee__val"><a href="mailto:contact@nevie-global.fr">contact@nevie-global.fr</a></p>
+            </div>
+          </div>
+
+          <div class="coordonnee">
+            <svg class="ico" aria-hidden="true"><use href="#i-globe"></use></svg>
+            <div>
+              <p class="coordonnee__lib">Pôle technologie</p>
+              <p class="coordonnee__val">
+                <a href="https://nevie-global.com" target="_blank" rel="noopener noreferrer">nevie-global.com</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="coordonnee">
+            <svg class="ico" aria-hidden="true"><use href="#i-bouclier"></use></svg>
+            <div>
+              <p class="coordonnee__lib">Confidentialité</p>
+              <p class="coordonnee__val">
+                Toute prise de contact est traitée de manière confidentielle.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------------------------------------------------------------
+             Formulaire de contact général — même mécanique d'envoi
+             --------------------------------------------------------------- -->
+        <div class="carte form-bloc reveal">
+          <form class="form-grille" id="form-contact" novalidate>
+
+            <div class="pot-de-miel" aria-hidden="true">
+              <label for="contact-site">Ne pas remplir</label>
+              <input type="text" id="contact-site" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="champ">
+              <label for="contact-nom">Nom et prénom <span class="requis" aria-hidden="true">*</span></label>
+              <input type="text" id="contact-nom" name="Nom" required autocomplete="name" placeholder="Votre nom">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="contact-societe">Société</label>
+              <input type="text" id="contact-societe" name="Société" autocomplete="organization" placeholder="Votre société">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="contact-email">E-mail <span class="requis" aria-hidden="true">*</span></label>
+              <input type="email" id="contact-email" name="email" required autocomplete="email" placeholder="vous@societe.fr">
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ">
+              <label for="contact-objet">Objet <span class="requis" aria-hidden="true">*</span></label>
+              <select id="contact-objet" name="Objet" required>
+                <option value="" selected disabled>Sélectionner…</option>
+                <option value="Demande institutionnelle">Demande institutionnelle</option>
+                <option value="Partenariat">Partenariat</option>
+                <option value="Presse">Presse</option>
+                <option value="Autre">Autre</option>
+              </select>
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ champ--plein">
+              <label for="contact-message">Message <span class="requis" aria-hidden="true">*</span></label>
+              <textarea id="contact-message" name="Message" rows="5" required placeholder="Votre message"></textarea>
+              <p class="champ__erreur" data-erreur></p>
+            </div>
+
+            <div class="champ-consentement">
+              <input type="checkbox" id="contact-rgpd" name="Consentement RGPD" value="Accordé" required>
+              <label for="contact-rgpd">
+                J'accepte que mes informations soient utilisées pour répondre à ma demande.
+                Voir la <a href="politique-de-confidentialite.html">politique de confidentialité</a>. <span class="requis" aria-hidden="true">*</span>
+              </label>
+            </div>
+            <p class="champ__erreur" data-erreur-consentement></p>
+
+            <div class="form-pied">
+              <p class="mention-confidentialite">
+                <svg class="ico" aria-hidden="true"><use href="#i-cadenas"></use></svg>
+                Vos informations sont transmises par e-mail à la direction du groupe.
+                Aucune donnée n'est enregistrée sur ce site.
+              </p>
+              <button class="btn btn--primaire" type="submit" data-libelle="Envoyer le message">
+                Envoyer le message
+              </button>
+            </div>
+
+            <p class="form-retour" data-retour role="status" aria-live="polite"></p>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     PIED DE PAGE
+     ========================================================================== -->
+<footer class="pied">
+  <div class="conteneur">
+
+    <div class="pied__haut">
+
+      <div class="pied__marque">
+        <a class="marque" href="#accueil" aria-label="NEVIE-GLOBAL SAS — retour en haut de page">
+          <svg class="marque__embleme" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <rect x="1" y="1" width="62" height="62" rx="15" fill="#0D0B08" stroke="#C8961E" stroke-opacity=".45" stroke-width="1.5"/>
+            <path d="M19 46V18h6l14 20V18h6v28h-6L25 26v20z" fill="#C8961E"/>
+          </svg>
+          <span class="marque__texte">
+            <span class="marque__nom">NEVIE<span>-</span>GLOBAL</span>
+            <span class="marque__forme">Holding</span>
+          </span>
+        </a>
+        <p class="pied__desc">
+          Société holding française basée à Nantes, qui construit un portefeuille
+          d'entreprises par acquisitions successives, organisé en pôles.
+        </p>
+      </div>
+
+      <div>
+        <p class="pied__titre">Le groupe</p>
+        <ul class="pied__liens">
+          <li><a href="#groupe">Le Groupe</a></li>
+          <li><a href="#modele">Notre Modèle</a></li>
+          <li><a href="#entreprises">Nos Entreprises</a></li>
+          <li><a href="#croissance">Croissance &amp; Acquisitions</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="pied__titre">Informations</p>
+        <ul class="pied__liens">
+          <li><a href="#ceder">Céder son entreprise</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+          <li><a href="https://nevie-global.com" target="_blank" rel="noopener noreferrer">NEVIE-GLOBAL LIMITED</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="filet-h">
+
+    <div class="pied__bas">
+      <p>© <span data-annee>2026</span> NEVIE-GLOBAL SAS — SAS au capital de 50 € — Nantes, France.</p>
+      <p class="liens-legaux">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-de-confidentialite.html">Politique de confidentialité</a>
+        <a href="#" data-rouvrir-cookies>Gérer les cookies</a>
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ==========================================================================
+     BANDEAU COOKIES — bannière unique, Accepter et Refuser fonctionnels.
+     Le site n'installe aucun traceur tiers : le choix est enregistré dans le
+     navigateur (localStorage) et aucun script de mesure n'est chargé.
+     ========================================================================== -->
+<!-- <div> et non <aside> : le rôle « dialog » n'est pas autorisé sur un
+     élément aside (règle ARIA vérifiée par les audits d'accessibilité). -->
+<div class="cookies" id="cookies" role="dialog" aria-modal="false" aria-live="polite"
+     aria-labelledby="cookies-titre" aria-describedby="cookies-texte">
+  <p class="cookies__titre" id="cookies-titre">
+    <svg class="ico" aria-hidden="true"><use href="#i-cookie"></use></svg>
+    Cookies et confidentialité
+  </p>
+  <p id="cookies-texte">
+    Ce site n'utilise aucun cookie publicitaire ni aucun traceur tiers. Seul un
+    indicateur technique enregistre votre choix afin de ne plus vous solliciter.
+    Vous pouvez le refuser sans conséquence sur la navigation.
+    <a href="politique-de-confidentialite.html">En savoir plus</a>.
+  </p>
+  <div class="cookies__actions">
+    <button class="btn btn--primaire" type="button" data-cookies="accepter">Accepter</button>
+    <button class="btn btn--secondaire" type="button" data-cookies="refuser">Refuser</button>
+  </div>
+</div>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
