@@ -1,45 +1,37 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+"""
+Éléments communs à toutes les pages du site NEVIE-GLOBAL SAS.
 
-  <title>Mentions légales — NEVIE-GLOBAL SAS</title>
-  <meta name="description" content="Mentions légales du site institutionnel de NEVIE-GLOBAL SAS : éditeur, directeur de la publication, hébergeur et propriété intellectuelle.">
-  <link rel="canonical" href="https://www.nevie-global.fr/mentions-legales.html">
-  <meta name="theme-color" content="#0D0B08">
-  <meta name="author" content="NEVIE-GLOBAL SAS">
+Ce module n'est PAS nécessaire au fonctionnement du site : les fichiers .html
+présents à la racine sont le livrable et se suffisent à eux-mêmes. Cet outil
+sert uniquement à régénérer l'en-tête, le pied de page et le bandeau cookies
+à l'identique sur les onze pages, pour éviter qu'ils divergent au fil des
+modifications.
 
-  <!-- Partage sur les réseaux et messageries -->
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="fr_FR">
-  <meta property="og:site_name" content="NEVIE-GLOBAL SAS">
-  <meta property="og:title" content="Mentions légales — NEVIE-GLOBAL SAS">
-  <meta property="og:description" content="Mentions légales du site institutionnel de NEVIE-GLOBAL SAS : éditeur, directeur de la publication, hébergeur et propriété intellectuelle.">
-  <meta property="og:url" content="https://www.nevie-global.fr/mentions-legales.html">
-  <meta property="og:image" content="https://www.nevie-global.fr/assets/img/og-nevie-global.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
+Usage :  python3 outils/construire.py
+"""
 
-  <link rel="icon" href="assets/img/favicon-96.png" type="image/png" sizes="96x96">
-  <link rel="apple-touch-icon" href="assets/img/favicon-96.png">
+DOMAINE = "https://www.nevie-global.fr"
 
-  <!-- Polices auto-hébergées : aucune requête vers Google Fonts, aucune adresse
-       IP de visiteur transmise à un tiers (position la plus sûre au regard du RGPD). -->
-  <link rel="preload" href="assets/fonts/poppins-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/fonts.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+# ---------------------------------------------------------------------------
+# Navigation principale : (fichier, libellé)
+# ---------------------------------------------------------------------------
+NAV = [
+    ("le-groupe.html", "Le Groupe"),
+    ("notre-modele.html", "Notre Modèle"),
+    ("gouvernance.html", "Gouvernance"),
+    ("nos-entreprises.html", "Nos Entreprises"),
+    ("croissance-acquisitions.html", "Croissance"),
+    ("contact.html", "Contact"),
+]
+CTA = ("ceder-son-entreprise.html", "Céder son entreprise")
 
-  <script src="assets/js/main.js" defer></script>
-</head>
-<body>
 
-<a class="saut-contenu" href="#contenu">Aller au contenu principal</a>
-
-<!-- Bibliothèque d'icônes : définie une fois, réutilisée via <use> -->
-<svg class="sr-only" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+# ---------------------------------------------------------------------------
+# Bibliothèque d'icônes : un sprite SVG inline, défini une seule fois par page.
+# Aucune police d'icônes, aucun fichier externe, donc aucune requête réseau et
+# aucun décalage de mise en page au chargement.
+# ---------------------------------------------------------------------------
+SPRITE = """<svg class="sr-only" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
   <symbol id="i-fleche-droite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
   <symbol id="i-fleche-gauche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-externe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5M19 5l-8 8M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
@@ -67,9 +59,25 @@
   <symbol id="i-document" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9z"/><path d="M13.5 3.5V9H19M8.5 13h7M8.5 16.5h4.5"/></symbol>
   <symbol id="i-utilisateurs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="8.5" r="3.2"/><path d="M3.8 19.2a5.9 5.9 0 0 1 11.4 0"/><path d="M16 5.6a3.2 3.2 0 0 1 0 5.8M17.4 14.2a5.9 5.9 0 0 1 2.8 5"/></symbol>
   <symbol id="i-boussole" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M15.2 8.8l-1.8 4.4-4.4 1.8 1.8-4.4z"/></symbol>
-</svg>
+</svg>"""
 
-<!-- ==========================================================================
+
+def entete(page, prefixe=""):
+    """En-tête fixe : logo officiel + navigation. `page` est le nom de fichier
+    de la page courante, utilisé pour marquer le lien correspondant."""
+    liens = []
+    for fichier, libelle in NAV:
+        actif = ' est-page' if fichier == page else ''
+        courant = ' aria-current="page"' if fichier == page else ''
+        liens.append(
+            f'        <a class="nav__lien{actif}" href="{prefixe}{fichier}"{courant}>{libelle}</a>'
+        )
+    liens = "\n".join(liens)
+
+    cta_fichier, cta_libelle = CTA
+    cta_courant = ' aria-current="page"' if cta_fichier == page else ''
+
+    return f"""<!-- ==========================================================================
      EN-TÊTE — bloc commun, identique sur les onze pages.
      Toute modification doit être reportée sur chaque page (ou régénérée avec
      outils/construire.py).
@@ -77,11 +85,11 @@
 <header class="entete" id="entete">
   <div class="conteneur entete__inner">
 
-    <a class="marque" href="index.html">
+    <a class="marque" href="{prefixe}index.html">
       <picture>
-        <source srcset="assets/img/logo-nevie-global.webp" type="image/webp">
+        <source srcset="{prefixe}assets/img/logo-nevie-global.webp" type="image/webp">
         <!-- alt vide : le nom du groupe est déjà écrit en toutes lettres à côté -->
-        <img class="marque__logo" src="assets/img/logo-nevie-global.png"
+        <img class="marque__logo" src="{prefixe}assets/img/logo-nevie-global.png"
              width="288" height="288" alt="" decoding="async">
       </picture>
       <span class="marque__texte">
@@ -92,13 +100,8 @@
     </a>
 
     <nav class="nav" id="nav" aria-label="Navigation principale">
-        <a class="nav__lien" href="le-groupe.html">Le Groupe</a>
-        <a class="nav__lien" href="notre-modele.html">Notre Modèle</a>
-        <a class="nav__lien" href="gouvernance.html">Gouvernance</a>
-        <a class="nav__lien" href="nos-entreprises.html">Nos Entreprises</a>
-        <a class="nav__lien" href="croissance-acquisitions.html">Croissance</a>
-        <a class="nav__lien" href="contact.html">Contact</a>
-      <a class="btn btn--primaire" href="ceder-son-entreprise.html">Céder son entreprise</a>
+{liens}
+      <a class="btn btn--primaire" href="{prefixe}{cta_fichier}"{cta_courant}>{cta_libelle}</a>
     </nav>
 
     <button class="burger" id="burger" type="button"
@@ -107,118 +110,12 @@
     </button>
 
   </div>
-</header>
+</header>"""
 
-<main id="contenu">
 
-<section class="page-legale">
-  <div class="conteneur">
-
-    <a class="retour-accueil" href="index.html">
-      <svg class="ico" aria-hidden="true"><use href="#i-fleche-gauche"></use></svg>
-      Retour à l'accueil
-    </a>
-
-    <h1>Mentions légales</h1>
-    <p class="maj">Dernière mise à jour : août 2026</p>
-
-    <h2>1. Éditeur du site</h2>
-    <dl>
-      <div><dt>Dénomination sociale</dt><dd>NEVIE-GLOBAL SAS</dd></div>
-      <div><dt>Forme juridique</dt><dd>Société par actions simplifiée (SAS)</dd></div>
-      <div><dt>Capital social</dt><dd>50 € (500 actions de 0,10 €)</dd></div>
-      <div><dt>Siège social</dt><dd>2 Place Jean V, bureau 3 — 44000 Nantes, France</dd></div>
-      <div><dt>SIREN</dt><dd>993 888 841 — RCS Nantes</dd></div>
-      <!-- À COMPLÉTER : numéro SIRET dès réception du Kbis définitif -->
-      <div><dt>SIRET</dt><dd>[à compléter dès réception du Kbis définitif]</dd></div>
-      <!-- À COMPLÉTER : numéro de TVA intracommunautaire, s'il y a lieu -->
-      <div><dt>TVA intracommunautaire</dt><dd>[à compléter, le cas échéant]</dd></div>
-      <div><dt>Présidente</dt><dd>Elisa Varinot</dd></div>
-      <div><dt>Directeur Général</dt><dd>Emmanuel Varinot</dd></div>
-    </dl>
-
-    <h2>2. Directeur de la publication</h2>
-    <p>Emmanuel Varinot, Directeur Général de NEVIE-GLOBAL SAS.</p>
-
-    <h2>3. Hébergement</h2>
-    <!-- À COMPLÉTER : raison sociale, adresse et téléphone de l'hébergeur retenu.
-         La loi impose de faire figurer ces informations. -->
-    <dl>
-      <div><dt>Hébergeur</dt><dd>[à compléter selon l'hébergement retenu]</dd></div>
-      <div><dt>Adresse</dt><dd>[à compléter]</dd></div>
-      <div><dt>Téléphone</dt><dd>[à compléter]</dd></div>
-    </dl>
-
-    <h2>4. Objet du site</h2>
-    <p>
-      Le présent site est le site institutionnel de la holding NEVIE-GLOBAL SAS. Il a pour
-      objet de présenter le groupe, sa gouvernance, son modèle, son portefeuille de
-      participations et sa démarche d'acquisition. Il ne constitue ni un site marchand,
-      ni une offre de vente de produits ou de services.
-    </p>
-    <p>
-      Les informations publiées ne constituent ni une offre de souscription, ni un conseil
-      en investissement, ni une sollicitation d'achat ou de vente de titres.
-    </p>
-
-    <h2>5. Statut des participations</h2>
-    <p>
-      Les sociétés présentées dans la rubrique « Nos entreprises » sont accompagnées d'un
-      statut explicite. Une société signalée <strong>« en cours d'acquisition »</strong> n'est,
-      à la date de publication, ni détenue ni intégrée au périmètre du groupe&nbsp;: l'opération
-      correspondante n'est pas juridiquement finalisée. Les pôles signalés
-      <strong>« à venir »</strong> ne correspondent à aucune société détenue à ce jour.
-    </p>
-    <p>
-      NEVIE-GLOBAL LIMITED (Royaume-Uni) est une entité distincte, disposant de son propre
-      site internet. Les produits, technologies et offres commerciales de cette société ne
-      sont pas ceux de NEVIE-GLOBAL SAS.
-    </p>
-
-    <h2>6. Propriété intellectuelle</h2>
-    <p>
-      L'ensemble des contenus de ce site (textes, images, logo, structure et mise en forme)
-      est la propriété de NEVIE-GLOBAL SAS, sauf mention contraire. Toute reproduction,
-      représentation, adaptation ou exploitation, totale ou partielle, sans autorisation
-      écrite préalable est interdite.
-    </p>
-    <p>
-      La marque et le logo NEVIE-GLOBAL sont la propriété de NEVIE-GLOBAL SAS.
-    </p>
-
-    <h2>7. Liens externes</h2>
-    <p>
-      Ce site comporte des liens vers des sites tiers, notamment celui de NEVIE-GLOBAL
-      LIMITED. NEVIE-GLOBAL SAS n'exerce aucun contrôle sur leur contenu et décline toute
-      responsabilité à leur égard.
-    </p>
-
-    <h2>8. Données personnelles et cookies</h2>
-    <p>
-      Le traitement des données transmises via les formulaires du site et l'usage des cookies
-      sont décrits dans la
-      <a href="confidentialite-cookies.html">politique de confidentialité et cookies</a>.
-    </p>
-
-    <h2>9. Responsabilité</h2>
-    <p>
-      NEVIE-GLOBAL SAS s'efforce d'assurer l'exactitude des informations publiées, mais ne
-      peut garantir qu'elles soient exemptes d'erreur ou d'omission. Les informations sont
-      susceptibles d'évoluer, en particulier le statut des participations.
-    </p>
-
-    <h2>10. Droit applicable</h2>
-    <p>
-      Le présent site est soumis au droit français. Tout litige relatif à son utilisation
-      relève de la compétence des tribunaux français.
-    </p>
-
-  </div>
-</section>
-
-</main>
-
-<!-- ==========================================================================
+def pied(prefixe=""):
+    """Pied de page commun."""
+    return f"""<!-- ==========================================================================
      PIED DE PAGE — bloc commun, identique sur les onze pages.
      ========================================================================== -->
 <footer class="pied">
@@ -227,10 +124,10 @@
     <div class="pied__haut">
 
       <div class="pied__marque">
-        <a class="marque" href="index.html">
+        <a class="marque" href="{prefixe}index.html">
           <picture>
-            <source srcset="assets/img/logo-nevie-global.webp" type="image/webp">
-            <img class="marque__logo" src="assets/img/logo-nevie-global.png"
+            <source srcset="{prefixe}assets/img/logo-nevie-global.webp" type="image/webp">
+            <img class="marque__logo" src="{prefixe}assets/img/logo-nevie-global.png"
                  width="288" height="288" alt="" loading="lazy" decoding="async">
           </picture>
           <span class="marque__texte">
@@ -249,19 +146,19 @@
       <div>
         <h2 class="pied__titre">Le groupe</h2>
         <ul class="pied__liens">
-          <li><a href="le-groupe.html">Le Groupe</a></li>
-          <li><a href="notre-modele.html">Notre Modèle</a></li>
-          <li><a href="gouvernance.html">Gouvernance</a></li>
-          <li><a href="nos-entreprises.html">Nos Entreprises</a></li>
+          <li><a href="{prefixe}le-groupe.html">Le Groupe</a></li>
+          <li><a href="{prefixe}notre-modele.html">Notre Modèle</a></li>
+          <li><a href="{prefixe}gouvernance.html">Gouvernance</a></li>
+          <li><a href="{prefixe}nos-entreprises.html">Nos Entreprises</a></li>
         </ul>
       </div>
 
       <div>
         <h2 class="pied__titre">Transmission</h2>
         <ul class="pied__liens">
-          <li><a href="croissance-acquisitions.html">Croissance &amp; Acquisitions</a></li>
-          <li><a href="ceder-son-entreprise.html">Céder son entreprise</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="{prefixe}croissance-acquisitions.html">Croissance &amp; Acquisitions</a></li>
+          <li><a href="{prefixe}ceder-son-entreprise.html">Céder son entreprise</a></li>
+          <li><a href="{prefixe}contact.html">Contact</a></li>
         </ul>
       </div>
 
@@ -272,16 +169,23 @@
     <div class="pied__bas">
       <p>&copy; <span data-annee>2026</span> NEVIE-GLOBAL SAS — Tous droits réservés.</p>
       <div class="liens-legaux">
-        <a href="mentions-legales.html">Mentions légales</a>
-        <a href="confidentialite-cookies.html">Confidentialité &amp; cookies</a>
+        <a href="{prefixe}mentions-legales.html">Mentions légales</a>
+        <a href="{prefixe}confidentialite-cookies.html">Confidentialité &amp; cookies</a>
         <a href="#" data-rouvrir-cookies>Gérer les cookies</a>
       </div>
     </div>
 
   </div>
-</footer>
+</footer>"""
 
-<!-- ==========================================================================
+
+def cookies():
+    """Bandeau de consentement, présent sur les onze pages.
+
+    <div> et non <aside> : le rôle « dialog » n'est pas autorisé sur un élément
+    aside (règle ARIA vérifiée par les audits d'accessibilité).
+    """
+    return """<!-- ==========================================================================
      BANDEAU COOKIES — une seule bannière, sur toutes les pages.
      Accepter / Refuser / Personnaliser. Aucun traceur n'est chargé par défaut :
      « Refuser » correspond exactement à l'état initial du site.
@@ -357,7 +261,67 @@
     </button>
   </div>
 
-</div>
+</div>"""
+
+
+def page(fichier, titre, description, corps, *, sans_index=False, extra_head=""):
+    """Assemble une page complète."""
+    canonique = f"{DOMAINE}/{'' if fichier == 'index.html' else fichier}"
+    robots = '\n  <meta name="robots" content="noindex, follow">' if sans_index else ''
+
+    return f"""<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{titre}</title>
+  <meta name="description" content="{description}">
+  <link rel="canonical" href="{canonique}">{robots}
+  <meta name="theme-color" content="#0D0B08">
+  <meta name="author" content="NEVIE-GLOBAL SAS">
+
+  <!-- Partage sur les réseaux et messageries -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="NEVIE-GLOBAL SAS">
+  <meta property="og:title" content="{titre}">
+  <meta property="og:description" content="{description}">
+  <meta property="og:url" content="{canonique}">
+  <meta property="og:image" content="{DOMAINE}/assets/img/og-nevie-global.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/img/favicon-96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="assets/img/favicon-96.png">
+
+  <!-- Polices auto-hébergées : aucune requête vers Google Fonts, aucune adresse
+       IP de visiteur transmise à un tiers (position la plus sûre au regard du RGPD). -->
+  <link rel="preload" href="assets/fonts/poppins-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/poppins-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+{extra_head}
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu principal</a>
+
+<!-- Bibliothèque d'icônes : définie une fois, réutilisée via <use> -->
+{SPRITE}
+
+{entete(fichier)}
+
+<main id="contenu">
+{corps}
+</main>
+
+{pied()}
+
+{cookies()}
 
 </body>
 </html>
+"""

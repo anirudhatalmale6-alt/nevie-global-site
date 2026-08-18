@@ -1,7 +1,9 @@
-# NEVIE-GLOBAL SAS — site institutionnel
-# Remplacer le domaine par le domaine définitif avant mise en production.
+# NEVIE-GLOBAL SAS — https://www.nevie-global.fr
+# Site institutionnel : l'ensemble des pages est destiné à l'indexation,
+# à l'exception de la page d'erreur.
 
 User-agent: *
 Allow: /
+Disallow: /404.html
 
 Sitemap: https://www.nevie-global.fr/sitemap.xml

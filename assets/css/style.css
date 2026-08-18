@@ -20,6 +20,7 @@
    15. Pages annexes (mentions légales, confidentialité)
    16. Animations d'apparition + préférences de mouvement réduit
    17. Points de rupture responsive
+   18. Composants propres au site multi-pages (hero de page, fiches, 404…)
    ========================================================================== */
 
 /* ==========================================================================
@@ -38,10 +39,16 @@
   --noir-4:          #221C18;  /* survol de carte */
   --bleu-clair:      #3E8BFF;  /* bleu au survol */
 
+  /* Liens en texte : mesurés à 5,4:1 minimum sur les fonds du site (AA).
+     Le bleu #0A6CFF de la charte reste utilisé en aplat de bouton, où il
+     porte du texte blanc et satisfait le contraste. */
+  --lien:            #3E8BFF;
+  --lien-survol:     #6BA5FF;
+
   /* --- Texte --- */
   --texte:           #F3EFE9;  /* texte principal, blanc chaud */
   --texte-doux:      #B5ADA3;  /* texte secondaire */
-  --texte-faible:    #837B72;  /* légendes, mentions */
+  --texte-faible:    #928A80;  /* légendes, mentions — 4,95:1 minimum (AA) */
 
   /* --- Filets et contours (jamais de bordure franche : anneaux discrets) --- */
   --filet:           rgba(243, 239, 233, .09);
@@ -58,7 +65,7 @@
   --t-corps:  clamp(.95rem, .92rem + .18vw, 1.05rem);
   --t-chapo:  clamp(1.02rem, .96rem + .5vw, 1.22rem);
   --t-petit:  .82rem;
-  --t-micro:  .72rem;
+  --t-micro:  .76rem;   /* 12,16 px : au-dessus du seuil de lisibilité */
 
   /* --- Espacements --- */
   --gouttiere: clamp(1.25rem, 4vw, 2.5rem);
@@ -122,13 +129,18 @@ p { margin: 0 0 1.05em; }
 p:last-child { margin-bottom: 0; }
 
 a {
-  color: var(--bleu);
+  color: var(--lien);
   text-decoration: none;
   transition: color var(--duree-rapide) var(--courbe);
 }
-a:hover { color: var(--bleu-clair); }
+a:hover { color: var(--lien-survol); }
 
 img, svg { max-width: 100%; height: auto; display: block; }
+
+/* L'attribut « hidden » doit l'emporter sur les display: flex / inline-flex
+   des composants, sans quoi un élément masqué en HTML reste affiché
+   (cas du bouton « Enregistrer mes choix » du bandeau cookies). */
+[hidden] { display: none !important; }
 
 /* Les listes servent ici de structure sémantique, pas de puces natives :
    les repères visuels sont dessinés en CSS (voir .puces, .liste-marquee). */
@@ -345,16 +357,26 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   min-height: 76px;
 }
 
-/* --- Marque : emblème « N » + raison sociale --- */
+/* --- Marque : logo officiel + raison sociale ---
+   Le logo est le fichier fourni par le client, non retouché (seule la marge
+   blanche qui l'entourait a été détourée). Le nom du groupe est répété en
+   Poppins à côté : à la taille d'un en-tête, le texte contenu dans le logo
+   n'est plus lisible. L'image porte donc alt="" pour ne pas doubler
+   l'annonce du nom aux lecteurs d'écran. */
 .marque {
   display: inline-flex;
   align-items: center;
-  gap: .7rem;
+  gap: .75rem;
   color: var(--texte);
   flex: none;
 }
 .marque:hover { color: var(--texte); }
-.marque__embleme { width: 38px; height: 38px; flex: none; }
+.marque__logo {
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 9px;
+}
 .marque__texte { display: flex; flex-direction: column; line-height: 1.1; }
 .marque__nom {
   font-size: .95rem;
@@ -396,7 +418,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav__lien.est-actif { color: var(--texte); }
 .nav__lien.est-actif::after { transform: scaleX(1); }
 
-.entete .btn { padding: .68rem 1.15rem; }
+.entete .btn { padding: .68rem 1.15rem; white-space: nowrap; }
 
 /* --- Bouton hamburger (mobile) --- */
 .burger {
@@ -1231,8 +1253,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .avenir__liste { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* --- Tablette / bascule du menu --- */
-@media (max-width: 900px) {
+/* --- Tablette / bascule du menu ---
+   Seuil fixé à 1080 px : la navigation compte six entrées plus le bouton
+   « Céder son entreprise ». En dessous, le bouton se casse sur deux lignes. */
+@media (max-width: 1080px) {
   html { scroll-padding-top: 80px; }
 
   .burger { display: block; }
@@ -1314,3 +1338,418 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   body { background: #fff; color: #111; }
   .page-legale p, .page-legale li, .page-legale dd { color: #333; }
 }
+
+/* ==========================================================================
+   18. COMPOSANTS DU SITE MULTI-PAGES
+   Le site compte dix routes : l'accueil conserve le grand hero, les neuf
+   autres pages utilisent un hero compact commun (.page-hero).
+   ========================================================================== */
+
+/* --- Hero compact des pages intérieures --- */
+.page-hero {
+  position: relative;
+  padding-block: clamp(8rem, 15vh, 11rem) clamp(2.5rem, 5vw, 4rem);
+  overflow: hidden;
+}
+.page-hero__fond {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(62% 120% at 82% 8%, rgba(10, 108, 255, .14) 0%, transparent 60%),
+    radial-gradient(48% 110% at 6% 92%, rgba(200, 150, 30, .11) 0%, transparent 58%);
+}
+.page-hero .conteneur { position: relative; z-index: 1; }
+.page-hero h1 {
+  font-size: clamp(2rem, 1.15rem + 3.1vw, 3.4rem);
+  letter-spacing: -.03em;
+  max-width: 20ch;
+}
+.page-hero__chapo {
+  margin-top: 1.35rem;
+  max-width: 64ch;
+  color: var(--texte-doux);
+  font-size: var(--t-chapo);
+  font-weight: 300;
+  line-height: 1.68;
+}
+.page-hero__actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.1rem; }
+
+/* Le hero de page réserve déjà un espace bas : la première section qui le suit
+   n'a pas besoin de l'espacement complet, sinon le vide devient trop grand. */
+.page-hero + .section { padding-top: clamp(2rem, 4vw, 3.5rem); }
+
+/* Fil d'Ariane : situe la page dans l'arborescence, utile aux moteurs */
+.ariane {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: 1.4rem;
+  font-size: var(--t-micro);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+  flex-wrap: wrap;
+}
+.ariane a { color: var(--texte-faible); }
+.ariane a:hover { color: var(--or-clair); }
+.ariane .sep { color: var(--filet-fort); }
+.ariane [aria-current="page"] { color: var(--or-clair); }
+
+/* --- Lien de navigation correspondant à la page courante --- */
+.nav__lien.est-page { color: var(--texte); }
+.nav__lien.est-page::after { transform: scaleX(1); }
+
+/* --- Philosophie : quatre piliers --- */
+.philo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+}
+.philo__item { padding: clamp(1.4rem, 2.6vw, 1.9rem); }
+.philo__item:hover { background: var(--noir-4); }
+.philo__ico {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: var(--r-s);
+  background: rgba(200,150,30,.1);
+  color: var(--or-clair);
+  margin-bottom: 1.1rem;
+}
+.philo__ico .ico { width: 19px; height: 19px; }
+.philo__titre { font-size: 1rem; font-weight: 500; }
+.philo__desc { margin-top: .55rem; font-size: var(--t-petit); color: var(--texte-doux); font-weight: 300; line-height: 1.7; }
+
+/* --- Cartes de direction, version texte seule ---
+   Aucune photo n'est fournie par le client et aucun emplacement n'est réservé :
+   les cartes sont conçues pour être complètes sans image (cf. CDC partie 13). */
+.direction {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+.direction__carte { padding: clamp(1.8rem, 3.2vw, 2.4rem); }
+.direction__carte::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--or), transparent 70%);
+}
+.direction__role {
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--or-clair);
+}
+.direction__nom {
+  margin-top: .7rem;
+  font-size: clamp(1.35rem, 1.1rem + .8vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.direction__texte { margin-top: 1.1rem; color: var(--texte-doux); font-weight: 300; font-size: var(--t-petit); line-height: 1.75; }
+
+/* --- Fiche détaillée d'une participation --- */
+.fiche { padding: clamp(1.8rem, 3.4vw, 2.6rem); margin-bottom: clamp(1.2rem, 2.5vw, 1.8rem); }
+.fiche::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--or), transparent 70%);
+}
+.fiche--acquisition::before { background: linear-gradient(90deg, var(--bleu), transparent 70%); }
+.fiche__tete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.fiche__pole {
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+.fiche__nom { margin-top: .55rem; font-size: clamp(1.25rem, 1.05rem + .7vw, 1.6rem); font-weight: 600; letter-spacing: -.015em; }
+.fiche__desc { margin-top: 1rem; max-width: var(--largeur-texte); color: var(--texte-doux); font-weight: 300; }
+.fiche__meta {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--filet);
+  border-radius: var(--r-m);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+.fiche__meta > div { background: var(--noir-2); padding: .95rem 1.1rem; }
+.fiche__meta dt {
+  font-size: var(--t-micro);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+.fiche__meta dd { margin: .3rem 0 0; font-size: var(--t-petit); color: var(--texte); }
+.fiche__pied { margin-top: 1.5rem; display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+
+/* --- Étapes verticales numérotées (processus de cession) --- */
+.parcours { display: grid; gap: 0; }
+.parcours__etape {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 1.2rem;
+  padding-bottom: 1.9rem;
+}
+.parcours__etape:last-child { padding-bottom: 0; }
+/* Trait de liaison vertical entre les pastilles */
+.parcours__etape:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 40px;
+  bottom: 4px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--filet-or), var(--filet));
+}
+.parcours__num {
+  position: relative;
+  z-index: 1;
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--noir);
+  box-shadow: inset 0 0 0 1px var(--filet-or);
+  color: var(--or-clair);
+  font-size: .8rem;
+  font-weight: 500;
+}
+.parcours__titre { font-size: 1rem; font-weight: 500; padding-top: .55rem; }
+.parcours__desc { margin-top: .35rem; font-size: var(--t-petit); color: var(--texte-doux); font-weight: 300; line-height: 1.7; }
+
+/* --- Étiquettes (zones géographiques, secteurs) --- */
+.etiquettes { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.etiquette {
+  padding: .38rem .8rem;
+  border-radius: 999px;
+  background: rgba(243,239,233,.045);
+  box-shadow: inset 0 0 0 1px var(--filet);
+  font-size: var(--t-micro);
+  color: var(--texte-doux);
+  letter-spacing: .03em;
+}
+
+/* --- Champ fichier (pièce jointe du dossier de cession) --- */
+.champ-fichier input[type="file"] {
+  padding: .6rem .7rem;
+  font-size: var(--t-petit);
+  color: var(--texte-doux);
+  cursor: pointer;
+}
+.champ-fichier input[type="file"]::file-selector-button {
+  margin-right: .85rem;
+  padding: .48rem .9rem;
+  border: 0;
+  border-radius: var(--r-s);
+  background: rgba(243,239,233,.07);
+  box-shadow: inset 0 0 0 1px var(--filet-fort);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background-color var(--duree-rapide) var(--courbe);
+}
+.champ-fichier input[type="file"]::file-selector-button:hover { background: rgba(243,239,233,.12); }
+.champ__aide {
+  font-size: var(--t-micro);
+  color: var(--texte-faible);
+  line-height: 1.6;
+}
+
+/* Barre de progression de l'envoi (le fichier peut prendre quelques secondes) */
+.form-progression {
+  grid-column: 1 / -1;
+  display: none;
+  height: 2px;
+  margin-top: 1rem;
+  border-radius: 2px;
+  background: var(--filet);
+  overflow: hidden;
+}
+.form-progression.est-visible { display: block; }
+.form-progression__barre {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--or), var(--bleu));
+  transition: width var(--duree) var(--courbe);
+}
+
+/* --- Bandeau cookies : panneau « Personnaliser » --- */
+.cookies__perso {
+  display: none;
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  box-shadow: inset 0 1px 0 var(--filet);
+}
+.cookies__perso.est-ouvert { display: block; }
+.categorie {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .85rem 0;
+}
+.categorie + .categorie { box-shadow: inset 0 1px 0 var(--filet); }
+.categorie__nom { font-size: var(--t-petit); font-weight: 500; color: var(--texte); }
+.categorie__desc { margin-top: .25rem; font-size: var(--t-micro); color: var(--texte-faible); line-height: 1.6; max-width: 46ch; }
+
+/* Interrupteur : une vraie case à cocher, stylée, jamais un faux bouton */
+.bascule { position: relative; flex: none; display: inline-flex; align-items: center; margin-top: .15rem; }
+.bascule input {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 40px; height: 22px;
+  border-radius: 999px;
+  background: rgba(243,239,233,.1);
+  box-shadow: inset 0 0 0 1px var(--filet-fort);
+  cursor: pointer;
+  transition: background-color var(--duree) var(--courbe), box-shadow var(--duree) var(--courbe);
+}
+.bascule input::after {
+  content: '';
+  position: absolute;
+  top: 4px; left: 4px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--texte-doux);
+  transition: transform var(--duree) var(--courbe), background-color var(--duree) var(--courbe);
+}
+.bascule input:checked { background: rgba(10,108,255,.32); box-shadow: inset 0 0 0 1px var(--bleu); }
+.bascule input:checked::after { transform: translateX(18px); background: #fff; }
+.bascule input:disabled { cursor: not-allowed; opacity: .75; }
+.bascule input:disabled:checked { background: rgba(200,150,30,.24); box-shadow: inset 0 0 0 1px var(--filet-or); }
+.bascule input:disabled:checked::after { background: var(--or-clair); }
+
+/* --- Page 404 --- */
+.erreur {
+  min-height: 78svh;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(8rem, 15vh, 11rem) var(--section-y);
+  position: relative;
+  overflow: hidden;
+}
+.erreur__code {
+  font-size: clamp(4.5rem, 2rem + 11vw, 9rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.05em;
+  color: transparent;
+  background: linear-gradient(120deg, var(--or), var(--or-clair) 40%, rgba(200,150,30,.15));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.erreur h1 { margin-top: 1.2rem; font-size: var(--t-h2); }
+.erreur p { margin-top: 1.1rem; max-width: 52ch; color: var(--texte-doux); font-weight: 300; }
+.erreur .page-hero__actions { margin-top: 2rem; }
+
+/* --- Renvoi de bas de page vers la page suivante --- */
+.suite {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+  border-radius: var(--r-l);
+  background: var(--noir-3);
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+.suite__lib { font-size: var(--t-micro); letter-spacing: .14em; text-transform: uppercase; color: var(--texte-faible); }
+.suite__titre { margin-top: .35rem; font-size: var(--t-h3); font-weight: 500; }
+
+/* --- Responsive propre à ces composants --- */
+@media (max-width: 1080px) {
+  .philo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .direction { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .philo { grid-template-columns: 1fr; }
+  .page-hero__actions .btn { width: 100%; }
+  .cookies__actions .btn { flex: 1 1 100%; }
+  .suite { flex-direction: column; align-items: flex-start; }
+  .suite .btn { width: 100%; }
+}
+
+/* ==========================================================================
+   19. LIENS EN CORPS DE TEXTE
+   Un lien inséré dans une phrase ne doit pas se distinguer uniquement par sa
+   couleur : l'écart mesuré avec le texte qui l'entoure n'est que de 1,49:1,
+   loin des 3:1 requis. On le souligne donc, uniquement dans les contextes de
+   texte courant — la navigation, le pied de page et les cartes gardent leurs
+   liens sans soulignement, puisqu'ils y sont isolés.
+   ========================================================================== */
+.page-legale p a,
+.page-legale li a,
+.page-legale dd a,
+.cookies p a,
+.champ-consentement label a,
+.mention-confidentialite a,
+.groupe__texte p a,
+.axe__desc a,
+.etape__desc a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .18em;
+  text-decoration-color: rgba(62, 139, 255, .55);
+  transition: color var(--duree-rapide) var(--courbe),
+              text-decoration-color var(--duree-rapide) var(--courbe);
+}
+.page-legale p a:hover,
+.page-legale li a:hover,
+.page-legale dd a:hover,
+.cookies p a:hover,
+.champ-consentement label a:hover,
+.mention-confidentialite a:hover,
+.groupe__texte p a:hover,
+.axe__desc a:hover,
+.etape__desc a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ==========================================================================
+   20. UTILITAIRES D'ESPACEMENT ET DE TITRAGE
+   Ces quelques classes remplacent les attributs style="" qui figuraient dans
+   le HTML. L'objectif est de pouvoir servir le site avec une politique de
+   sécurité de contenu stricte : sans « style-src 'unsafe-inline' », un
+   attribut style est purement et simplement ignoré par le navigateur.
+   ========================================================================== */
+.u-mt-0   { margin-top: 0; }
+.u-mt-s   { margin-top: 1.4rem; }
+.u-mt-m   { margin-top: 1.6rem; }
+.u-mt-l   { margin-top: 2rem; }
+.u-mt-xl  { margin-top: 2.5rem; }
+.u-mt-xxl { margin-top: 3rem; }
+.u-mb-l   { margin-bottom: 2rem; }
+.u-m-0    { margin: 0; }
+
+/* Intertitre introduisant un nouveau groupe de fiches */
+.u-bloc-suivant { margin: 4rem 0 2rem; }
+
+.u-max-520 { max-width: 520px; }
+.u-max-70  { max-width: 70ch; }
+
+.u-titre-2 { font-size: var(--t-h2); }
+.u-titre-3 { font-size: var(--t-h3); font-weight: 500; }
+.u-t-normal { font-size: 1rem; }
+.u-texte-doux { color: var(--texte-doux); font-weight: 300; }
+
+.u-une-colonne { grid-template-columns: 1fr; }

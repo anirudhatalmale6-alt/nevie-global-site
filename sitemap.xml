@@ -1,21 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Remplacer le domaine par le domaine définitif avant mise en production. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.nevie-global.fr/</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.nevie-global.fr/le-groupe.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.nevie-global.fr/notre-modele.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.nevie-global.fr/gouvernance.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nevie-global.fr/nos-entreprises.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.nevie-global.fr/croissance-acquisitions.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nevie-global.fr/ceder-son-entreprise.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.nevie-global.fr/contact.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.nevie-global.fr/mentions-legales.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.nevie-global.fr/politique-de-confidentialite.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <loc>https://www.nevie-global.fr/confidentialite-cookies.html</loc>
+    <lastmod>2026-08-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

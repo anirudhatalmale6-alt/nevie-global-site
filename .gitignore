@@ -2,8 +2,13 @@
 *.log
 .DS_Store
 Thumbs.db
+__pycache__/
+*.pyc
 
 # Éditeurs
 .vscode/
 .idea/
 *.swp
+
+# Documents transmis par le client : ils n'ont pas leur place dans le dépôt du site
+*.pdf
